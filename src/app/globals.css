@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #f59e0b; /* Amber 500 - Obra Yellow */
+  --color-secondary: #334155; /* Slate 700 */
+  --color-accent: #fbbf24; /* Amber 400 */
+  --color-background: #0f172a; /* Slate 900 */
+  --color-surface: #1e293b; /* Slate 800 */
+  --color-text: #f8fafc; /* Slate 50 */
+  --color-text-muted: #94a3b8; /* Slate 400 */
+}
+
+@layer base {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-white;
+  }
+}
+
+/* Custom Utilities */
+@utility pb-safe {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+@utility text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-accent text-slate-900 font-bold py-3 px-6 rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .card-obra {
+    @apply bg-surface border border-slate-700/50 rounded-2xl p-4 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5;
+  }
+
+  .nav-bottom {
+    @apply fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-lg border-t border-slate-700/50 px-6 py-3 flex justify-between items-center z-50 pb-safe;
+  }
+
+  .nav-item {
+    @apply flex flex-col items-center gap-1 text-text-muted transition-colors duration-200;
+  }
+
+  .nav-item.active {
+    @apply text-primary;
+  }
+}
