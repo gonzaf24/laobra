@@ -122,10 +122,10 @@ export default async function CategoryPage({
             <div className="bg-slate-800/40 border border-slate-700/50 p-4 rounded-xl">
               <h4 className="text-white font-bold text-sm mb-2 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                Suelos y Nivelación
+                Morteros (M-5 vs M-7,5)
               </h4>
               <p className="text-xs text-text-muted leading-relaxed">
-                Usa siempre <span className="text-white">Mortero Autonivelante</span> para acabados perfectos. Si el desnivel es {">"}3cm, pide Capa Gruesa.
+                Usa <span className="text-white font-bold">M-7,5</span> como estándar. Tiene mejor plasticidad y resistencia (75kg/cm²) que el M-5, evitando que se disgrege al secar.
               </p>
             </div>
             <div className="bg-slate-800/40 border border-slate-700/50 p-4 rounded-xl">

@@ -141,6 +141,31 @@ export default function ComprasPage() {
                 </div>
               ))}
             </div>
+
+            {/* Comparativa Morteros M-5 vs M-7,5 */}
+            {group.category === "Cemento y Ladrillo" && (
+              <div className="mt-8 p-6 rounded-2xl bg-slate-900/80 border border-slate-700 shadow-xl">
+                <h4 className="text-white font-black text-lg mb-4 uppercase flex items-center gap-2">
+                  <AlertTriangle size={20} className="text-primary" />
+                  M-5 vs M-7,5: ¿Cuál elegir?
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 text-sm">
+                  <div className="space-y-2">
+                    <p className="text-text-muted">
+                      <span className="text-white font-bold block mb-1 uppercase text-xs">Mortero M-5</span>
+                      Resistencia baja-media (50kg/cm²). Solo para tabiquería interior ligera o rellenos.
+                    </p>
+                    <p className="text-text-muted">
+                      <span className="text-white font-bold block mb-1 uppercase text-xs">Mortero M-7,5</span>
+                      Estándar profesional (75kg/cm²). Obligatorio en muros de carga y zonas húmedas.
+                    </p>
+                  </div>
+                  <div className="bg-primary/5 p-4 rounded-xl border border-primary/20 italic text-sm text-text-muted">
+                    "La diferencia de precio es insignificante. Unifica todo al <span className="text-primary font-bold">M-7,5</span> para asegurar adherencia y evitar errores en la obra."
+                  </div>
+                </div>
+              </div>
+            )}
           </section>
         ))}
 

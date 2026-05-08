@@ -2,14 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, PlayCircle, Hammer, Calculator, ShoppingCart } from "lucide-react";
+import {
+  Home,
+  PlayCircle,
+  Hammer,
+  Calculator,
+  ShoppingCart,
+  Bath,
+} from "lucide-react";
 
 export default function BottomNav() {
   const pathname = usePathname();
 
   const navItems = [
     { name: "Inicio", href: "/", icon: Home },
-    { name: "Formación", href: "/formacion", icon: PlayCircle },
+    { name: "Estancias", href: "/estancias", icon: Bath },
     { name: "Compras", href: "/compras", icon: ShoppingCart },
     { name: "Herramientas", href: "/herramientas", icon: Hammer },
     { name: "Cálculos", href: "/calculos", icon: Calculator },
