@@ -20,7 +20,7 @@ export default function ToolsPage() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {TOOLS.map((tool) => (
           <div key={tool.id} className="card-obra p-3 flex flex-col gap-3">
             <div className="aspect-square rounded-lg bg-slate-700/50 flex items-center justify-center overflow-hidden">
