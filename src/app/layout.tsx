@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body className={`${inter.className} antialiased pb-24`}>
         <Header />
         <main className="min-h-screen max-w-5xl mx-auto">

@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  PlayCircle,
   Hammer,
-  Calculator,
-  ShoppingCart,
-  Bath,
+  Box,
+  Layout,
+  GraduationCap,
+  Calculator
 } from "lucide-react";
 
 export default function BottomNav() {
@@ -16,8 +16,9 @@ export default function BottomNav() {
 
   const navItems = [
     { name: "Inicio", href: "/", icon: Home },
-    { name: "Estancias", href: "/estancias", icon: Bath },
-    { name: "Compras", href: "/compras", icon: ShoppingCart },
+    { name: "Formación", href: "/formaciones", icon: GraduationCap },
+    { name: "Estancias", href: "/estancias", icon: Layout },
+    { name: "Materiales", href: "/materiales", icon: Box },
     { name: "Herramientas", href: "/herramientas", icon: Hammer },
     { name: "Cálculos", href: "/calculos", icon: Calculator },
   ];
@@ -25,7 +26,7 @@ export default function BottomNav() {
   return (
     <nav className="nav-bottom">
       {navItems.map((item) => {
-        const isActive = pathname === item.href;
+        const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
         const Icon = item.icon;
 
         return (
@@ -34,8 +35,8 @@ export default function BottomNav() {
             href={item.href}
             className={`nav-item ${isActive ? "active" : ""}`}
           >
-            <Icon size={24} />
-            <span className="text-[10px] font-medium">{item.name}</span>
+            <Icon size={20} />
+            <span className="text-[10px] font-bold tracking-tight">{item.name}</span>
           </Link>
         );
       })}
