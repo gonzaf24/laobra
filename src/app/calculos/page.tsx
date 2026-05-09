@@ -24,6 +24,8 @@ export default function CalculosPage() {
     | "escombros"
     | "pintura"
     | "hormigon"
+    | "ladrillos"
+    | "juntas"
   >("mortero");
 
   return (
@@ -61,7 +63,7 @@ export default function CalculosPage() {
           onClick={() => setActiveCalc("mermas")}
           className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold tracking-widest whitespace-nowrap uppercase transition-all ${activeCalc === "mermas" ? "bg-primary border-primary text-slate-900 shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]" : "border-slate-800 bg-slate-900/50 text-slate-400 hover:border-slate-600"}`}
         >
-          <Grid3X3 size={14} /> Azulejos
+          <Grid3X3 size={14} /> Cerámica
         </button>
         <button
           onClick={() => setActiveCalc("pladur")}
@@ -87,6 +89,18 @@ export default function CalculosPage() {
         >
           <Database size={14} /> Hormigón
         </button>
+        <button
+          onClick={() => setActiveCalc("ladrillos")}
+          className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold tracking-widest whitespace-nowrap uppercase transition-all ${activeCalc === "ladrillos" ? "bg-primary border-primary text-slate-900 shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]" : "border-slate-800 bg-slate-900/50 text-slate-400 hover:border-slate-600"}`}
+        >
+          <Layers size={14} /> Ladrillos
+        </button>
+        <button
+          onClick={() => setActiveCalc("juntas")}
+          className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold tracking-widest whitespace-nowrap uppercase transition-all ${activeCalc === "juntas" ? "bg-primary border-primary text-slate-900 shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]" : "border-slate-800 bg-slate-900/50 text-slate-400 hover:border-slate-600"}`}
+        >
+          <Grid3X3 size={14} /> Juntas
+        </button>
       </div>
 
       <div className="min-h-[500px] rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-xl backdrop-blur-sm">
@@ -97,6 +111,8 @@ export default function CalculosPage() {
         {activeCalc === "escombros" && <CalculadoraEscombros />}
         {activeCalc === "pintura" && <CalculadoraPintura />}
         {activeCalc === "hormigon" && <CalculadoraHormigon />}
+        {activeCalc === "ladrillos" && <CalculadoraLadrillos />}
+        {activeCalc === "juntas" && <CalculadoraBorada />}
       </div>
     </div>
   );
@@ -301,19 +317,41 @@ function CalculadoraMortero() {
 function CalculadoraMermas() {
   const [m2, setM2] = useState("");
   const [merma, setMerma] = useState("10");
+  const [tipo, setTipo] = useState("gres");
+  const [medidaGres, setMedidaGres] = useState("60x60");
+  const [medidaPasta, setMedidaPasta] = useState("30x60");
 
-  const total = Number(m2) * (1 + Number(merma) / 100);
+  const opcionesGres = [
+    { label: "30 x 60 cm", value: "30x60", m2PorPieza: 0.18 },
+    { label: "60 x 60 cm (Estándar)", value: "60x60", m2PorPieza: 0.36 },
+    { label: "90 x 90 cm", value: "90x90", m2PorPieza: 0.81 },
+    { label: "120 x 60 cm (Gran Formato)", value: "120x60", m2PorPieza: 0.72 },
+  ];
+
+  const opcionesPasta = [
+    { label: "20 x 20 cm (Clásico)", value: "20x20", m2PorPieza: 0.04 },
+    { label: "30 x 60 cm (Estándar moderno)", value: "30x60", m2PorPieza: 0.18 },
+    { label: "33 x 100 cm", value: "33x100", m2PorPieza: 0.33 },
+  ];
+
+  const m2PorPieza =
+    tipo === "gres"
+      ? opcionesGres.find((o) => o.value === medidaGres)?.m2PorPieza || 0.36
+      : opcionesPasta.find((o) => o.value === medidaPasta)?.m2PorPieza || 0.18;
+
+  const totalM2 = Number(m2) * (1 + Number(merma) / 100);
+  const totalPiezas = Math.ceil(totalM2 / m2PorPieza);
 
   return (
     <div className="flex flex-col gap-6">
       <div className="border-b border-slate-800 pb-4">
         <h3 className="mb-3 flex items-center gap-2 text-2xl font-black text-white uppercase italic">
-          <Grid3X3 className="text-primary" /> Cálculo de Azulejos
+          <Grid3X3 className="text-primary" /> Cálculo de Cerámica
         </h3>
         <p className="text-text-muted text-xs leading-relaxed">
           Nunca pidas los metros exactos de la habitación. Necesitas margen para
-          los recortes contra la pared, roturas accidentales y para guardar
-          repuestos futuros.
+          los recortes contra la pared, roturas y para guardar
+          repuestos. Ahora puedes calcular las piezas exactas.
         </p>
       </div>
 
@@ -332,7 +370,7 @@ function CalculadoraMermas() {
           </li>
           <li>
             <span className="font-bold text-white">20%:</span> Colocación en
-            diagonal (espiga) o habitaciones muy irregulares.
+            diagonal o habitaciones muy irregulares.
           </li>
         </ul>
       </div>
@@ -340,40 +378,99 @@ function CalculadoraMermas() {
       <div className="space-y-4">
         <div>
           <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
-            Superficie real (m²)
+            Tipo de Material
           </label>
-          <input
-            type="number"
-            value={m2}
-            onChange={(e) => setM2(e.target.value)}
-            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
-            placeholder="Ej: 15.5"
-          />
+          <div className="flex gap-4">
+            <button
+              onClick={() => setTipo("gres")}
+              className={`flex-1 rounded-lg py-2 text-[10px] font-black tracking-widest uppercase transition-all ${tipo === "gres" ? "bg-primary text-slate-900 shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]" : "border border-slate-700 bg-slate-900 text-slate-400"}`}
+            >
+              Gres Porcelánico
+            </button>
+            <button
+              onClick={() => setTipo("pasta")}
+              className={`flex-1 rounded-lg py-2 text-[10px] font-black tracking-widest uppercase transition-all ${tipo === "pasta" ? "bg-primary text-slate-900 shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]" : "border border-slate-700 bg-slate-900 text-slate-400"}`}
+            >
+              Pasta Blanca / Roja
+            </button>
+          </div>
         </div>
+
         <div>
           <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
-            % de Merma / Desperdicio
+            Medida de la baldosa
           </label>
           <select
-            value={merma}
-            onChange={(e) => setMerma(e.target.value)}
+            value={tipo === "gres" ? medidaGres : medidaPasta}
+            onChange={(e) =>
+              tipo === "gres"
+                ? setMedidaGres(e.target.value)
+                : setMedidaPasta(e.target.value)
+            }
             className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
           >
-            <option value="5">5% - Muy poco corte</option>
-            <option value="10">10% - Corte estándar (Recomendado)</option>
-            <option value="15">15% - Trabado / Piezas muy grandes</option>
-            <option value="20">20% - Diagonal / Espiga</option>
+            {tipo === "gres"
+              ? opcionesGres.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))
+              : opcionesPasta.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
           </select>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+              Superficie (m²)
+            </label>
+            <input
+              type="number"
+              value={m2}
+              onChange={(e) => setM2(e.target.value)}
+              className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+              placeholder="Ej: 15.5"
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+              % Merma
+            </label>
+            <select
+              value={merma}
+              onChange={(e) => setMerma(e.target.value)}
+              className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+            >
+              <option value="5">5% - Muy poco corte</option>
+              <option value="10">10% - Corte estándar</option>
+              <option value="15">15% - Trabado / Grandes</option>
+              <option value="20">20% - Diagonal</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div className="bg-primary/10 border-primary/30 mt-2 rounded-xl border p-5 text-center">
-        <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
-          Cajas a pedir (Total de m²):
-        </p>
-        <p className="text-primary text-4xl font-black">
-          {m2 ? total.toFixed(2) : 0} <span className="text-lg">m²</span>
-        </p>
+      <div className="bg-primary/10 border-primary/30 mt-2 flex items-center justify-between rounded-xl border p-5">
+        <div>
+          <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
+            Piezas necesarias:
+          </p>
+          <p className="text-primary text-4xl font-black">
+            {m2 ? totalPiezas : 0} <span className="text-lg">baldosas</span>
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+            M² a pedir (con merma):
+          </p>
+          <p className="text-sm font-bold text-white">
+            {m2 ? totalM2.toFixed(2) : 0} m²
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -821,6 +918,358 @@ function CalculadoraYeso() {
           </p>
           <p className="text-sm font-bold text-white">
             {m2 ? totalKg.toFixed(0) : 0} Kg
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CalculadoraLadrillos() {
+  const [m2, setM2] = useState("");
+  const [tipoPieza, setTipoPieza] = useState("hueco-doble");
+  const [conMerma, setConMerma] = useState(true);
+
+  const piezasData: Record<
+    string,
+    { nombre: string; udsM2: number; udsPalet: number; mortero: string }
+  > = {
+    "hueco-sencillo": {
+      nombre: "Ladrillo Hueco Sencillo (24x11,5x4)",
+      udsM2: 33,
+      udsPalet: 480,
+      mortero: "M-5",
+    },
+    "hueco-doble": {
+      nombre: "Ladrillo Hueco Doble / Totxana (24x11,5x7)",
+      udsM2: 33,
+      udsPalet: 320,
+      mortero: "M-5",
+    },
+    perforado: {
+      nombre: "Ladrillo Perforado / Gerol (24x11,5x7)",
+      udsM2: 33,
+      udsPalet: 320,
+      mortero: "M-7,5",
+    },
+    macizo: {
+      nombre: "Ladrillo Macizo (24x11,5x5)",
+      udsM2: 33,
+      udsPalet: 400,
+      mortero: "M-7,5",
+    },
+    "bloque-10": {
+      nombre: "Bloque de Hormigón (40x20x10)",
+      udsM2: 12.5,
+      udsPalet: 100,
+      mortero: "M-7,5",
+    },
+    "bloque-20": {
+      nombre: "Bloque de Hormigón (40x20x20)",
+      udsM2: 12.5,
+      udsPalet: 60,
+      mortero: "M-7,5",
+    },
+  };
+
+  const pieza = piezasData[tipoPieza];
+  const mermaFactor = conMerma ? 1.1 : 1;
+  const totalUnidades = Math.ceil(Number(m2) * pieza.udsM2 * mermaFactor);
+  const palets = Math.ceil(totalUnidades / pieza.udsPalet);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="border-b border-slate-800 pb-4">
+        <h3 className="mb-3 flex items-center gap-2 text-2xl font-black text-white uppercase italic">
+          <Layers className="text-primary" /> Ladrillos y Bloques
+        </h3>
+        <p className="text-text-muted text-xs leading-relaxed">
+          Calcula cuántas piezas necesitas para levantar una pared. Incluye
+          estimación de palets completos para hacer el pedido al almacén.
+        </p>
+      </div>
+
+      <div className="space-y-2 rounded-lg border border-orange-500/20 bg-orange-500/5 p-4">
+        <p className="flex items-center gap-1.5 text-[9px] font-black tracking-widest text-orange-400 uppercase">
+          <Info size={12} /> Cómo funciona:
+        </p>
+        <p className="text-[11px] leading-relaxed text-slate-300">
+          Selecciona el tipo de pieza, indica los metros cuadrados de pared y
+          obtendrás las{" "}
+          <span className="font-bold text-white">unidades exactas</span> y los{" "}
+          <span className="font-bold text-white">palets</span> que necesitas
+          pedir. La merma del 10% cubre las piezas que se rompen al cortar.
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+            Tipo de Pieza
+          </label>
+          <select
+            value={tipoPieza}
+            onChange={(e) => setTipoPieza(e.target.value)}
+            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+          >
+            <option value="hueco-sencillo">
+              Ladrillo Hueco Sencillo (24x11,5x4 cm)
+            </option>
+            <option value="hueco-doble">
+              Ladrillo Hueco Doble / Totxana (24x11,5x7 cm)
+            </option>
+            <option value="perforado">
+              Ladrillo Perforado / Gerol (24x11,5x7 cm)
+            </option>
+            <option value="macizo">Ladrillo Macizo (24x11,5x5 cm)</option>
+            <option value="bloque-10">
+              Bloque de Hormigón (40x20x10 cm)
+            </option>
+            <option value="bloque-20">
+              Bloque de Hormigón (40x20x20 cm)
+            </option>
+          </select>
+        </div>
+        <div>
+          <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+            Superficie de pared (m²)
+          </label>
+          <input
+            type="number"
+            value={m2}
+            onChange={(e) => setM2(e.target.value)}
+            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+            placeholder="Ej: 25"
+          />
+        </div>
+        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-700 bg-slate-950 p-3 transition-colors hover:border-slate-500">
+          <input
+            type="checkbox"
+            checked={conMerma}
+            onChange={(e) => setConMerma(e.target.checked)}
+            className="accent-primary h-4 w-4"
+          />
+          <span className="text-xs text-slate-300">
+            Añadir{" "}
+            <span className="font-bold text-white">+10% de merma</span>{" "}
+            (roturas y cortes)
+          </span>
+        </label>
+      </div>
+
+      {/* Consejo de mortero */}
+      <div className="rounded-lg border border-slate-700 bg-slate-950 p-3 shadow-inner">
+        <p className="mb-1 text-[9px] font-black tracking-widest text-slate-400 uppercase">
+          <Lightbulb size={10} className="mr-1 inline text-amber-500" />
+          Mortero recomendado:
+        </p>
+        <p className="text-[11px] text-slate-300">
+          Para{" "}
+          <span className="font-bold text-white">{pieza.nombre}</span>, usa
+          Mortero Seco{" "}
+          <span className="text-primary font-bold">{pieza.mortero}</span>.
+          {pieza.mortero === "M-5"
+            ? " Es suficiente para paredes interiores que no soportan peso."
+            : " Es obligatorio para muros de carga y exteriores."}
+        </p>
+      </div>
+
+      {/* Resultado */}
+      <div className="bg-primary/10 border-primary/30 flex items-center justify-between rounded-xl border p-5">
+        <div>
+          <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
+            Piezas necesarias:
+          </p>
+          <p className="text-primary text-4xl font-black">
+            {m2 ? totalUnidades : 0} <span className="text-lg">uds</span>
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+            Palets completos:
+          </p>
+          <p className="text-sm font-bold text-white">
+            {m2 ? palets : 0} {palets === 1 ? "palet" : "palets"}
+          </p>
+          <p className="mt-0.5 text-[9px] text-slate-500">
+            ({pieza.udsPalet} uds/palet)
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CalculadoraBorada() {
+  const [largoBaldosa, setLargoBaldosa] = useState("");
+  const [anchoBaldosa, setAnchoBaldosa] = useState("");
+  const [espesorBaldosa, setEspesorBaldosa] = useState("");
+  const [anchoJunta, setAnchoJunta] = useState("");
+  const [m2, setM2] = useState("");
+
+  // Fórmula: ((A+B) / (A*B)) * C * D * 1.5 = kg/m²
+  const A = Number(largoBaldosa) * 10; // cm a mm
+  const B = Number(anchoBaldosa) * 10;
+  const C = Number(espesorBaldosa); // ya en mm
+  const D = Number(anchoJunta); // ya en mm
+
+  const kgPorM2 = A > 0 && B > 0 ? ((A + B) / (A * B)) * C * D * 1.5 : 0;
+  const totalKg = kgPorM2 * Number(m2);
+  const sacos5kg = Math.ceil(totalKg / 5);
+
+  const todosRellenados =
+    largoBaldosa && anchoBaldosa && espesorBaldosa && anchoJunta && m2;
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="border-b border-slate-800 pb-4">
+        <h3 className="mb-3 flex items-center gap-2 text-2xl font-black text-white uppercase italic">
+          <Grid3X3 className="text-primary" /> Mortero para Juntas
+        </h3>
+        <p className="text-text-muted text-xs leading-relaxed">
+          Calcula la cantidad exacta de mortero para juntas (rejuntado) que necesitas en
+          función del tamaño de la baldosa y el ancho de la junta.
+        </p>
+      </div>
+
+      <div className="space-y-2 rounded-lg border border-teal-500/20 bg-teal-500/5 p-4">
+        <p className="flex items-center gap-1.5 text-[9px] font-black tracking-widest text-teal-400 uppercase">
+          <Info size={12} /> Referencia rápida de juntas:
+        </p>
+        <p className="text-[11px] leading-relaxed text-slate-300">
+          •{" "}
+          <span className="font-bold text-white">1.5 - 2 mm:</span> Junta
+          mínima para porcelánico rectificado.
+          <br />•{" "}
+          <span className="font-bold text-white">3 mm:</span> Junta estándar
+          para interior.
+          <br />•{" "}
+          <span className="font-bold text-white">5 mm:</span> Junta ancha
+          para exteriores o rústicos.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+            Largo baldosa (cm)
+          </label>
+          <input
+            type="number"
+            value={largoBaldosa}
+            onChange={(e) => setLargoBaldosa(e.target.value)}
+            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+            placeholder="Ej: 60"
+          />
+        </div>
+        <div>
+          <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+            Ancho baldosa (cm)
+          </label>
+          <input
+            type="number"
+            value={anchoBaldosa}
+            onChange={(e) => setAnchoBaldosa(e.target.value)}
+            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+            placeholder="Ej: 60"
+          />
+        </div>
+        <div>
+          <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+            Espesor baldosa (mm)
+          </label>
+          <input
+            type="number"
+            value={espesorBaldosa}
+            onChange={(e) => setEspesorBaldosa(e.target.value)}
+            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+            placeholder="Ej: 10"
+          />
+        </div>
+        <div>
+          <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+            Ancho junta (mm)
+          </label>
+          <input
+            type="number"
+            value={anchoJunta}
+            onChange={(e) => setAnchoJunta(e.target.value)}
+            className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+            placeholder="Ej: 3"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+          Superficie total (m²)
+        </label>
+        <input
+          type="number"
+          value={m2}
+          onChange={(e) => setM2(e.target.value)}
+          className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-white outline-none"
+          placeholder="Ej: 30"
+        />
+      </div>
+
+      {/* Consejo dinámico */}
+      {anchoJunta && Number(anchoJunta) >= 4 && (
+        <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3">
+          <p className="text-[11px] leading-relaxed text-slate-300">
+            <Lightbulb size={12} className="mr-1 inline text-amber-500" />
+            Con una junta de{" "}
+            <span className="font-bold text-white">{anchoJunta}mm</span> o
+            más, usa un mortero para juntas específico{" "}
+            <span className="font-bold text-amber-400">
+              &quot;para juntas anchas&quot;
+            </span>
+            . Los morteros normales pueden agrietarse al secar en juntas
+            grandes.
+          </p>
+        </div>
+      )}
+
+      {/* Rendimiento calculado */}
+      {todosRellenados && (
+        <div className="rounded-lg border border-slate-700 bg-slate-950 p-3 shadow-inner">
+          <p className="mb-1 text-[9px] font-black tracking-widest text-slate-400 uppercase">
+            <Zap size={10} className="mr-1 inline text-teal-400" />
+            Rendimiento calculado:
+          </p>
+          <p className="text-[11px] text-slate-300">
+            Con una baldosa de{" "}
+            <span className="font-bold text-white">
+              {largoBaldosa}x{anchoBaldosa} cm
+            </span>{" "}
+            y junta de{" "}
+            <span className="font-bold text-white">{anchoJunta}mm</span>,
+            necesitas aproximadamente{" "}
+            <span className="font-bold text-teal-400">
+              {kgPorM2.toFixed(2)} kg/m²
+            </span>{" "}
+            de mortero para juntas.
+          </p>
+        </div>
+      )}
+
+      {/* Resultado */}
+      <div className="bg-primary/10 border-primary/30 flex items-center justify-between rounded-xl border p-5">
+        <div>
+          <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
+            Bolsas de 5kg necesarias:
+          </p>
+          <p className="text-primary text-4xl font-black">
+            {todosRellenados ? sacos5kg : 0}{" "}
+            <span className="text-lg">bolsas</span>
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+            Total Material:
+          </p>
+          <p className="text-sm font-bold text-white">
+            {todosRellenados ? totalKg.toFixed(1) : 0} Kg
           </p>
         </div>
       </div>

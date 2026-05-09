@@ -5,14 +5,17 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { MATERIALS_DATA } from "@/lib/materials-data";
 import { ESTANCIAS_DATA } from "@/lib/estancias-data";
-import { Beaker, Info, Lightbulb, Box, ArrowLeft } from "lucide-react";
+import { Beaker, Info, Lightbulb, Box, ArrowLeft, Ruler, Tag, Edit3, CheckCircle, RefreshCcw } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
+import { useCustomPrices, generatePriceKey } from "@/lib/materials-store";
 
 function MaterialesList() {
   const searchParams = useSearchParams();
   const fromEstancia = searchParams.get("from");
   const [activeHash, setActiveHash] = useState("");
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
+  const [isEditingPrices, setIsEditingPrices] = useState(false);
+  const { prices: customPrices, updatePrice } = useCustomPrices();
 
   const originEstancia = fromEstancia
     ? ESTANCIAS_DATA.find((e) => e.id === fromEstancia)
@@ -55,29 +58,41 @@ function MaterialesList() {
       )}
 
       {/* Cabecera / Botón de retorno superior */}
-      {originEstancia ? (
-        <div className="mb-6">
+      <div className="mb-6 flex items-start justify-between gap-4">
+        {originEstancia ? (
           <Link
             href={`/estancias/${originEstancia.id}`}
-            className="text-text-muted hover:text-primary inline-flex items-center gap-2 text-[10px] font-bold uppercase transition-colors"
+            className="text-text-muted hover:text-primary inline-flex items-center gap-2 text-[10px] font-bold uppercase transition-colors mt-2"
           >
             <ArrowLeft size={12} />
             Volver a {originEstancia.name}
           </Link>
-        </div>
-      ) : (
-        <header className="mb-6">
-          <div className="mb-1 flex items-center gap-2">
-            <Box className="text-primary" size={18} />
-            <h2 className="text-xl font-black tracking-tight text-white uppercase italic md:text-3xl">
-              Banda de <span className="text-primary">Materiales</span>
-            </h2>
-          </div>
-          <p className="text-text-muted text-[10px] italic">
-            &quot;Conoce el producto para que la obra dure toda la vida.&quot;
-          </p>
-        </header>
-      )}
+        ) : (
+          <header>
+            <div className="mb-1 flex items-center gap-2">
+              <Box className="text-primary" size={18} />
+              <h2 className="text-xl font-black tracking-tight text-white uppercase italic md:text-3xl">
+                Banda de <span className="text-primary">Materiales</span>
+              </h2>
+            </div>
+            <p className="text-text-muted text-[10px] italic">
+              &quot;Conoce el producto para que la obra dure toda la vida.&quot;
+            </p>
+          </header>
+        )}
+
+        <button
+          onClick={() => setIsEditingPrices(!isEditingPrices)}
+          className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${
+            isEditingPrices
+              ? "bg-amber-500 text-slate-900 hover:bg-amber-400"
+              : "border border-amber-500/30 text-amber-500 hover:bg-amber-500/10"
+          }`}
+        >
+          {isEditingPrices ? <CheckCircle size={14} /> : <Edit3 size={14} />}
+          {isEditingPrices ? "Terminar Edición" : "Editar Precios"}
+        </button>
+      </div>
 
       <div className="space-y-4">
         {MATERIALS_DATA.map((material) => {
@@ -96,7 +111,7 @@ function MaterialesList() {
               <div className="flex flex-col md:flex-row">
                 {/* Espacio para Foto */}
                 <div
-                  className={`group/image relative aspect-[21/9] w-full cursor-pointer overflow-hidden border-b bg-slate-800/50 transition-colors md:aspect-square md:w-40 md:border-r md:border-b-0 ${
+                  className={`group/image relative aspect-21/9 w-full cursor-pointer overflow-hidden border-b bg-slate-800/50 transition-colors md:aspect-square md:w-40 md:border-r md:border-b-0 ${
                     isSelected
                       ? "border-primary/30"
                       : "hover:border-primary/50 border-slate-800"
@@ -210,6 +225,131 @@ function MaterialesList() {
                             }`}
                           >
                             {material.mixRatio}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Medidas */}
+                    {(material.sizes || material.standardSize) && (
+                      <div className="space-y-1 lg:col-span-2">
+                        <p className="mt-2 flex items-center gap-1.5 text-[8px] font-black tracking-widest text-indigo-400 uppercase">
+                          <Ruler size={10} /> Medidas Disponibles
+                        </p>
+                        <div
+                          className={`rounded-sm border p-3 transition-colors ${
+                            isSelected
+                              ? "border-indigo-500/40 bg-indigo-500/10"
+                              : "border-indigo-500/10 bg-indigo-500/5"
+                          }`}
+                        >
+                          {material.sizes && (
+                            <ul className="mb-2 flex flex-wrap gap-2">
+                              {material.sizes.map((size, i) => (
+                                <li
+                                  key={i}
+                                  className={`rounded border px-2 py-1 font-mono text-[10px] shadow-sm ${
+                                    isSelected
+                                      ? "border-indigo-500/30 bg-indigo-900/50 text-indigo-200"
+                                      : "border-slate-700 bg-slate-800 text-slate-400"
+                                  }`}
+                                >
+                                  {size}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {material.standardSize && (
+                            <p
+                              className={`mt-1 border-t pt-2 text-[11px] leading-relaxed ${
+                                isSelected
+                                  ? "border-indigo-500/30 font-medium text-indigo-200"
+                                  : "border-slate-700 text-slate-400"
+                              }`}
+                            >
+                              <span className="mr-1.5 text-[9px] font-black text-indigo-400 uppercase">
+                                Estándar:
+                              </span>
+                              {material.standardSize}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Precios */}
+                    {material.precios && material.precios.length > 0 && (
+                      <div className="space-y-1 lg:col-span-2">
+                        <p className="mt-2 flex items-center gap-1.5 text-[8px] font-black tracking-widest text-amber-500 uppercase">
+                          <Tag size={10} /> Precios de Referencia
+                        </p>
+                        <div
+                          className={`rounded-sm border p-3 transition-colors ${
+                            isSelected
+                              ? "border-amber-500/40 bg-amber-500/10"
+                              : "border-amber-500/10 bg-amber-500/5"
+                          }`}
+                        >
+                          <ul className="space-y-1.5">
+                            {material.precios.map((p, i) => {
+                              const key = generatePriceKey(material.id, p.formato);
+                              const customPrice = customPrices[key];
+                              const hasCustomPrice = customPrice !== undefined;
+                              const currentPrice = hasCustomPrice ? customPrice : p.precio;
+
+                              return (
+                                <li
+                                  key={i}
+                                  className="flex items-center justify-between border-b border-amber-500/10 pb-1.5 last:border-0 last:pb-0"
+                                >
+                                  <span className={`text-[11px] flex items-center gap-1 ${isSelected ? "text-amber-100" : "text-slate-300"}`}>
+                                    {p.formato}
+                                    {hasCustomPrice && !isEditingPrices && (
+                                      <span title="Precio modificado localmente" className="text-amber-400">*</span>
+                                    )}
+                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    {isEditingPrices ? (
+                                      <div className="flex items-center gap-1">
+                                        <input
+                                          type="number"
+                                          step="0.01"
+                                          className="w-16 rounded border border-amber-500/50 bg-slate-900 px-1 py-0.5 text-right font-mono text-[11px] text-amber-300 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                                          value={currentPrice}
+                                          onChange={(e) => {
+                                            const val = parseFloat(e.target.value);
+                                            if (!isNaN(val)) {
+                                              updatePrice(material.id, p.formato, val);
+                                            }
+                                          }}
+                                        />
+                                        {hasCustomPrice && (
+                                          <button
+                                            title="Restaurar precio base"
+                                            onClick={() => updatePrice(material.id, p.formato, null)}
+                                            className="text-slate-500 hover:text-red-400 transition-colors"
+                                          >
+                                            <RefreshCcw size={10} />
+                                          </button>
+                                        )}
+                                      </div>
+                                    ) : (
+                                      <span className={`font-mono text-[12px] font-black ${hasCustomPrice ? "text-amber-300" : "text-amber-400"}`}>
+                                        {currentPrice.toFixed(2)}€
+                                      </span>
+                                    )}
+                                    <span className="text-[9px] text-amber-500/70">
+                                      {p.unidad}
+                                    </span>
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                          <p className="mt-2 text-right text-[8px] italic text-amber-500/60">
+                            {isEditingPrices 
+                              ? "Modifica los precios para adaptarlos a tu zona. Usa el botón para volver al base."
+                              : "* Precios medios aproximados. Los precios con (*) han sido personalizados."}
                           </p>
                         </div>
                       </div>

@@ -81,7 +81,7 @@ export const FORMACIONES_DATA: FormacionGremio[] = [
       { id: "as-1", title: "Doble Encolado: Por qué es Vital", description: "Asegurando que no queden huecos bajo la pieza." },
       { id: "as-2", title: "Sistemas de Nivelación (Cuñas)", description: "Evitar cejas en formatos grandes." },
       { id: "as-3", title: "Cortes de Precisión y Esquinas", description: "Uso de la cortadora manual y eléctrica." },
-      { id: "as-4", title: "Rejuntado y Limpieza Final", description: "Aplicación de la borada y acabado impecable." }
+      { id: "as-4", title: "Rejuntado y Limpieza Final", description: "Aplicación del mortero para juntas y acabado impecable." }
     ]
   },
   {

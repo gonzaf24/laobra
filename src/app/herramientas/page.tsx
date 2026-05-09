@@ -109,7 +109,7 @@ const TOOLS_DATA: ToolCategory[] = [
   },
   {
     id: "alicatado",
-    title: "Alicatado y Revestimiento",
+    title: "Cerámica y Revestimiento",
     icon: Layers,
     color: "bg-emerald-500/10 text-emerald-400",
     tools: [

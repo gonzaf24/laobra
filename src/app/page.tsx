@@ -56,7 +56,7 @@ export default function Home() {
                     <HelpCircle size={10} /> ¿Qué encontrarás?
                   </p>
                   <p className="text-text-muted text-[11px] leading-relaxed">
-                    Videotutoriales y lecciones teóricas separadas por gremio (Albañilería, Pladur, Alicatado, Instalaciones).
+                    Videotutoriales y lecciones teóricas separadas por gremio (Albañilería, Pladur, Cerámica, Instalaciones).
                   </p>
                 </div>
                 <div>
@@ -203,7 +203,7 @@ export default function Home() {
                     <HelpCircle size={10} /> ¿Qué encontrarás?
                   </p>
                   <p className="text-text-muted text-[11px] leading-relaxed">
-                    Herramientas para calcular sacos de cemento, botes de agua, m² de suelo y kilos de borada.
+                    Herramientas para calcular sacos de cemento, botes de agua, m² de suelo y kilos de mortero para juntas.
                   </p>
                 </div>
                 <div>

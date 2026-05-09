@@ -3,24 +3,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Home,
   Hammer,
   Box,
   Layout,
   GraduationCap,
-  Calculator
+  Calculator,
+  PenTool
 } from "lucide-react";
 
 export default function BottomNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: "Inicio", href: "/", icon: Home },
     { name: "Formación", href: "/formaciones", icon: GraduationCap },
     { name: "Estancias", href: "/estancias", icon: Layout },
     { name: "Materiales", href: "/materiales", icon: Box },
     { name: "Herramientas", href: "/herramientas", icon: Hammer },
     { name: "Cálculos", href: "/calculos", icon: Calculator },
+    { name: "Arquitecto", href: "/arquitecto", icon: PenTool },
   ];
 
   return (
