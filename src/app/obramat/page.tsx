@@ -144,7 +144,7 @@ export default function ObramatPage() {
         <main className="relative flex-1 overflow-y-auto bg-slate-950">
           {activeCategory === null ? (
             <iframe
-              src="/catalogo_obramat_2026.pdf"
+              src="https://t9j9gm2inkpkci6y.private.blob.vercel-storage.com/Catalogo%202026%20-%20catalogo-2026-barcelona.pdf"
               className="h-full w-full border-none"
               title="Catálogo Obramat 2026"
             />
@@ -248,7 +248,7 @@ export default function ObramatPage() {
                                 </p>
                               </div>
                               <a
-                                href={`/catalogo_obramat_2026.pdf#page=${p.paginaCatalogo}`}
+                                href={`https://t9j9gm2inkpkci6y.private.blob.vercel-storage.com/Catalogo%202026%20-%20catalogo-2026-barcelona.pdf#page=${p.paginaCatalogo}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={() => handlePdfClick(p.sku)}
