@@ -363,6 +363,14 @@ function TabResumen({
             </span>
           </div>
           <div className="flex justify-between border-b border-slate-800 pb-2">
+            <span className="font-bold text-blue-400">
+              Gastos de Administración / Gestión
+            </span>
+            <span className="font-bold text-blue-400">
+              {formatEur(resumen.resumenJornaleros?.costeAdmin || 0)}
+            </span>
+          </div>
+          <div className="flex justify-between border-b border-slate-800 pb-2">
             <span className="font-bold text-amber-400">
               Especialistas y Subcontratas
             </span>
@@ -1097,6 +1105,138 @@ function TabManoDeObra({
                 Los trabajos desmarcados se calcularán automáticamente con el
                 precio de <b>Especialista (€/m²)</b>.
               </p>
+            </div>
+
+            {/* ═══ PERSONAL ADMINISTRATIVO ═══ */}
+            <div className="mt-8 border-t border-slate-800 pt-6">
+              <div className="mb-4 flex items-center justify-between">
+                <div>
+                  <h4 className="text-xs font-black tracking-widest text-slate-500 uppercase">
+                    💼 Gastos de Administración y Gestión
+                  </h4>
+                  <p className="text-[10px] text-slate-600 italic">
+                    Personal indirecto (gestión, compras, oficina) que no afecta
+                    al tiempo pero sí al coste.
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    const newAdmin = {
+                      id: Math.random().toString(36).substring(2, 11),
+                      nombre:
+                        "Administrativo " +
+                        ((jornaleros.personalAdmin?.length || 0) + 1),
+                      tipo: "jornal" as const,
+                      valor: 50,
+                    };
+                    onChangeJornaleros({
+                      ...jornaleros,
+                      personalAdmin: [
+                        ...(jornaleros.personalAdmin || []),
+                        newAdmin,
+                      ],
+                    });
+                  }}
+                  className="flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-1.5 text-[10px] font-black tracking-widest text-white uppercase hover:bg-slate-700"
+                >
+                  <Plus size={12} /> Añadir Personal
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {(jornaleros.personalAdmin || []).map((admin) => (
+                  <div
+                    key={admin.id}
+                    className="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-950/50 p-3"
+                  >
+                    <div className="flex-1">
+                      <input
+                        className="w-full bg-transparent text-xs font-bold text-white outline-none"
+                        value={admin.nombre}
+                        onChange={(e) => {
+                          const newList = (jornaleros.personalAdmin || []).map(
+                            (a) =>
+                              a.id === admin.id
+                                ? { ...a, nombre: e.target.value }
+                                : a
+                          );
+                          onChangeJornaleros({
+                            ...jornaleros,
+                            personalAdmin: newList,
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <select
+                        className="bg-transparent text-[10px] font-bold text-slate-500 outline-none"
+                        value={admin.tipo}
+                        onChange={(e) => {
+                          const newList = (jornaleros.personalAdmin || []).map(
+                            (a) =>
+                              a.id === admin.id
+                                ? {
+                                    ...a,
+                                    tipo: e.target.value as "jornal" | "fijo",
+                                  }
+                                : a
+                          );
+                          onChangeJornaleros({
+                            ...jornaleros,
+                            personalAdmin: newList,
+                          });
+                        }}
+                      >
+                        <option value="jornal">Sueldo Diario</option>
+                        <option value="fijo">Gasto Fijo</option>
+                      </select>
+                      <div className="flex items-center gap-1">
+                        <input
+                          type="number"
+                          className="w-16 bg-transparent text-right text-xs font-black text-blue-400 outline-none"
+                          value={admin.valor}
+                          onChange={(e) => {
+                            const newList = (
+                              jornaleros.personalAdmin || []
+                            ).map((a) =>
+                              a.id === admin.id
+                                ? { ...a, valor: Number(e.target.value) }
+                                : a
+                            );
+                            onChangeJornaleros({
+                              ...jornaleros,
+                              personalAdmin: newList,
+                            });
+                          }}
+                        />
+                        <span className="text-[10px] text-slate-600">
+                          €{admin.tipo === "jornal" ? "/d" : ""}
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const newList = (
+                          jornaleros.personalAdmin || []
+                        ).filter((a) => a.id !== admin.id);
+                        onChangeJornaleros({
+                          ...jornaleros,
+                          personalAdmin: newList,
+                        });
+                      }}
+                      className="p-1.5 text-slate-700 hover:text-red-400"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ))}
+                {(!jornaleros.personalAdmin ||
+                  jornaleros.personalAdmin.length === 0) && (
+                  <p className="py-4 text-center text-[10px] italic text-slate-600">
+                    No hay personal administrativo asignado a esta obra.
+                  </p>
+                )}
+              </div>
             </div>
 
             {resumen.resumenJornaleros && (

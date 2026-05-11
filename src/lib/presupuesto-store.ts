@@ -344,8 +344,22 @@ function calcularJornaleros(
 
   const diasPorSemana = config.trabajaSabados ? 6 : 5;
   const totalSemanas = totalDiasCalendario / diasPorSemana;
-  const costeCuadrilla =
-    Math.ceil(totalJornadasCuadrilla) * config.precioJornal;
+  const costeCuadrilla = Math.ceil(totalJornadasCuadrilla) * config.precioJornal;
+
+  // Cálculo de costes administrativos
+  let costeAdmin = 0;
+  if (config.personalAdmin) {
+    config.personalAdmin.forEach((admin) => {
+      if (admin.tipo === "jornal") {
+        // El coste administrativo por jornal depende de los días totales de la obra
+        costeAdmin += admin.valor * totalDiasCalendario;
+      } else {
+        costeAdmin += admin.valor;
+      }
+    });
+  }
+
+  const costeTotalManoDeObra = costeCuadrilla + costeAdmin;
 
   return {
     lineas,
@@ -354,13 +368,15 @@ function calcularJornaleros(
     totalDiasObra: Math.ceil(totalDiasCalendario),
     totalSemanasObra: Math.round(totalSemanas * 10) / 10,
     costeJornalesCuadrilla: costeCuadrilla,
+    costeAdmin: Math.round(costeAdmin),
+    costeTotalManoDeObra: Math.round(costeTotalManoDeObra),
     // Compatibilidad
     totalDiasOperario: Math.ceil(
       totalJornadasCuadrilla + totalJornadasEspecialistas
     ),
     totalDiasCalendario: Math.ceil(totalDiasCalendario),
     totalSemanasCalendario: Math.round(totalSemanas * 10) / 10,
-    costeTotal: costeCuadrilla,
+    costeTotal: Math.round(costeTotalManoDeObra),
   };
 }
 

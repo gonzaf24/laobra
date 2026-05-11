@@ -36,25 +36,34 @@ export const TARIFAS_DEFECTO: TarifasManoDeObra = {
 
 export type NivelRendimiento = "bajo" | "normal" | "alto";
 
+export interface PersonalAdmin {
+  id: string;
+  nombre: string;
+  tipo: "jornal" | "fijo";
+  valor: number; // €/día si es jornal, € totales si es fijo
+}
+
 export interface ConfigJornaleros {
   activo: boolean;
-  precioJornal: number;          // €/día por operario
-  numOperarios: number;          // Nº de albañiles en la cuadrilla
+  precioJornal: number; // €/día por operario
+  numOperarios: number; // Nº de albañiles en la cuadrilla
   rendimiento: NivelRendimiento;
   trabajaSabados: boolean;
   // % de tiempo no productivo por jornada (preparación, limpieza, esperas, etc.)
   porcentajeTiempoMuerto: number;
-  trabajosExcluidos: string[];   // Claves de RENDIMIENTOS_MEDIOS que NO hace la cuadrilla
+  trabajosExcluidos: string[]; // Claves de RENDIMIENTOS_MEDIOS que NO hace la cuadrilla
+  personalAdmin?: PersonalAdmin[]; // Personal de oficina/gestión
 }
 
 export const CONFIG_JORNALEROS_DEFECTO: ConfigJornaleros = {
   activo: false,
-  precioJornal: 120,         // €/día (oficial + peón aprox.)
+  precioJornal: 120, // €/día (oficial + peón aprox.)
   numOperarios: 2,
   rendimiento: "normal",
   trabajaSabados: false,
   porcentajeTiempoMuerto: 20,
   trabajosExcluidos: [],
+  personalAdmin: [],
 };
 
 // Rendimiento medio en m²/día para 1 operario a rendimiento "normal"
@@ -97,6 +106,8 @@ export interface ResumenJornaleros {
   totalDiasObra: number;
   totalSemanasObra: number;
   costeJornalesCuadrilla: number;
+  costeAdmin: number;
+  costeTotalManoDeObra: number;
   // Compatibilidad con código anterior
   totalDiasOperario: number;
   totalDiasCalendario: number;

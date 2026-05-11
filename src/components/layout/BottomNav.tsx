@@ -9,6 +9,7 @@ import {
   GraduationCap,
   Calculator,
   Layout,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function BottomNav() {
@@ -21,12 +22,14 @@ export default function BottomNav() {
     { name: "Herramientas", href: "/herramientas", icon: Hammer },
     { name: "Cálculos", href: "/calculos", icon: Calculator },
     { name: "Gestión", href: "/gestion", icon: Layers },
+    { name: "Propuesta", href: "/propuesta", icon: ShieldCheck },
   ];
 
   return (
     <nav className="nav-bottom">
       {navItems.map((item) => {
-        const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
+        const isActive =
+          pathname === item.href || pathname?.startsWith(item.href + "/");
         const Icon = item.icon;
 
         return (
@@ -36,7 +39,9 @@ export default function BottomNav() {
             className={`nav-item ${isActive ? "active" : ""}`}
           >
             <Icon size={20} />
-            <span className="text-[10px] font-bold tracking-tight">{item.name}</span>
+            <span className="text-[10px] font-bold tracking-tight">
+              {item.name}
+            </span>
           </Link>
         );
       })}
