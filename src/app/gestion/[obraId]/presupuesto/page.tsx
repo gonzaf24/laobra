@@ -15,8 +15,8 @@ import {
   Trash2,
   ChevronDown,
   Save,
-  RefreshCw,
   ShieldCheck,
+  Info,
 } from "lucide-react";
 import { getObra } from "@/lib/arquitecto-store";
 import type { Obra } from "@/lib/arquitecto-types";
@@ -256,7 +256,7 @@ function TabResumen({
             {presupuesto.jornaleros.trabajaSabados
               ? " Incluye sábados."
               : " Lunes a viernes."}
-            <span className="block mt-2 rounded-lg bg-slate-800/50 p-2 italic">
+            <span className="mt-2 block rounded-lg bg-slate-800/50 p-2 italic">
               <strong>Nota profesional:</strong> Aunque delegues trabajos a
               especialistas, estos siguen ocupando tiempo en el calendario.
               Calculamos sus jornadas usando rendimientos estándar para que tu
@@ -264,7 +264,7 @@ function TabResumen({
               gremios.
             </span>
             {resumen.resumenJornaleros.totalJornadasEspecialistas > 0 && (
-              <span className="block mt-2 text-amber-500 font-bold">
+              <span className="mt-2 block font-bold text-amber-500">
                 ✨ {resumen.resumenJornaleros.totalJornadasEspecialistas}{" "}
                 jornadas delegadas a especialistas externos.
               </span>
@@ -363,11 +363,11 @@ function TabResumen({
             </span>
           </div>
           <div className="flex justify-between border-b border-slate-800 pb-2">
-            <span className="font-bold text-blue-400">
-              Gastos de Administración / Gestión
+            <span className="font-bold text-indigo-400">
+              Gestión y Administración (Indirectos)
             </span>
-            <span className="font-bold text-blue-400">
-              {formatEur(resumen.resumenJornaleros?.costeAdmin || 0)}
+            <span className="font-bold text-indigo-400">
+              {formatEur(resumen.totalAdmin || 0)}
             </span>
           </div>
           <div className="flex justify-between border-b border-slate-800 pb-2">
@@ -640,43 +640,6 @@ function TabMateriales({ obra }: { obra: Obra }) {
 }
 
 // ─── Tab Mano de Obra ───
-function TarifaItem({
-  label,
-  description,
-  value,
-  defaultVal,
-  onChange,
-}: {
-  label: string;
-  description: string;
-  value: number;
-  defaultVal: number;
-  onChange: (v: number) => void;
-}) {
-  return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 transition-colors hover:border-slate-700">
-      <div className="mb-2 flex items-center justify-between">
-        <p className="text-sm font-bold text-white">{label}</p>
-        <span className="rounded bg-slate-800 px-2 py-0.5 text-[9px] font-bold text-slate-500">
-          Ref: {defaultVal}€/m²
-        </span>
-      </div>
-      <p className="mb-3 text-[11px] leading-relaxed text-slate-400">
-        {description}
-      </p>
-      <div className="flex items-center gap-2">
-        <input
-          type="number"
-          step="0.5"
-          className={inputCls + " max-w-[120px]"}
-          value={value || ""}
-          onChange={(e) => onChange(Number(e.target.value))}
-        />
-        <span className="text-xs font-bold text-slate-500">€ por cada m²</span>
-      </div>
-    </div>
-  );
-}
 
 function Capitulo({
   titulo,
@@ -719,7 +682,7 @@ function Capitulo({
         "Nivelado / Autonivelante",
         "Colocación de suelo",
       ].includes(concepto);
-    if (categoria === "Paredes")
+    if (categoria === "Tabiquería / Pared")
       return [
         "Tabiquería Pladur",
         "Tabiquería Ladrillo",
@@ -898,6 +861,8 @@ function TabManoDeObra({
   onChange,
   jornaleros,
   onChangeJornaleros,
+  personalAdmin,
+  onChangePersonalAdmin,
   resumen,
   partidasExtra,
   onChangePartidasExtra,
@@ -906,11 +871,33 @@ function TabManoDeObra({
   onChange: (t: TarifasManoDeObra) => void;
   jornaleros: ConfigJornaleros;
   onChangeJornaleros: (j: ConfigJornaleros) => void;
+  personalAdmin: PresupuestoObra["personalAdmin"];
+  onChangePersonalAdmin: (p: PresupuestoObra["personalAdmin"]) => void;
   resumen: ResumenPresupuesto;
   partidasExtra: PartidaManoObra[];
   onChangePartidasExtra: (p: PartidaManoObra[]) => void;
 }) {
   const resetDefaults = () => onChange({ ...TARIFAS_DEFECTO });
+
+  const addPersonaAdmin = () => {
+    onChangePersonalAdmin([
+      ...personalAdmin,
+      { id: crypto.randomUUID(), nombre: "", tipo: "jornal", valor: 0 },
+    ]);
+  };
+
+  const removePersonaAdmin = (id: string) => {
+    onChangePersonalAdmin(personalAdmin.filter((p) => p.id !== id));
+  };
+
+  const updatePersonaAdmin = (
+    id: string,
+    updates: Partial<PresupuestoObra["personalAdmin"][0]>
+  ) => {
+    onChangePersonalAdmin(
+      personalAdmin.map((p) => (p.id === id ? { ...p, ...updates } : p))
+    );
+  };
 
   // Agrupar líneas automáticas por concepto
   const lineasAutoAgrupadas: Record<
@@ -1076,167 +1063,44 @@ function TabManoDeObra({
                     jornaleros.trabajosExcluidos || []
                   ).includes(key);
                   return (
-                    <label
-                      key={key}
-                      className="flex cursor-pointer items-center gap-2 text-[10px] text-slate-400 hover:text-white"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={!isExcluded}
-                        onChange={(e) => {
-                          const newExcluidos = e.target.checked
-                            ? (jornaleros.trabajosExcluidos || []).filter(
-                                (k) => k !== key
-                              )
-                            : [...(jornaleros.trabajosExcluidos || []), key];
-                          onChangeJornaleros({
-                            ...jornaleros,
-                            trabajosExcluidos: newExcluidos,
-                          });
-                        }}
-                        className="accent-blue-500"
-                      />
-                      {info.label}
-                    </label>
+                    <div key={key} className="flex items-center gap-2">
+                      <label className="flex cursor-pointer items-center gap-2 text-[10px] text-slate-400 hover:text-white">
+                        <input
+                          type="checkbox"
+                          checked={!isExcluded}
+                          onChange={(e) => {
+                            const newExcluidos = e.target.checked
+                              ? (jornaleros.trabajosExcluidos || []).filter(
+                                  (k) => k !== key
+                                )
+                              : [...(jornaleros.trabajosExcluidos || []), key];
+                            onChangeJornaleros({
+                              ...jornaleros,
+                              trabajosExcluidos: newExcluidos,
+                            });
+                          }}
+                          className="accent-blue-500"
+                        />
+                        {info.label}
+                      </label>
+                      <div className="group relative">
+                        <Info
+                          size={11}
+                          className="cursor-help text-slate-600 transition-colors hover:text-blue-400"
+                        />
+                        <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 w-48 -translate-x-1/2 rounded-lg border border-slate-700 bg-slate-900 p-2 text-[9px] leading-relaxed text-slate-200 opacity-0 shadow-2xl transition-opacity group-hover:opacity-100">
+                          {info.desc}
+                          <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-slate-700 bg-slate-900" />
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
-              <p className="mt-3 text-[9px] italic text-slate-500">
+              <p className="mt-3 text-[9px] text-slate-500 italic">
                 Los trabajos desmarcados se calcularán automáticamente con el
                 precio de <b>Especialista (€/m²)</b>.
               </p>
-            </div>
-
-            {/* ═══ PERSONAL ADMINISTRATIVO ═══ */}
-            <div className="mt-8 border-t border-slate-800 pt-6">
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-black tracking-widest text-slate-500 uppercase">
-                    💼 Gastos de Administración y Gestión
-                  </h4>
-                  <p className="text-[10px] text-slate-600 italic">
-                    Personal indirecto (gestión, compras, oficina) que no afecta
-                    al tiempo pero sí al coste.
-                  </p>
-                </div>
-                <button
-                  onClick={() => {
-                    const newAdmin = {
-                      id: Math.random().toString(36).substring(2, 11),
-                      nombre:
-                        "Administrativo " +
-                        ((jornaleros.personalAdmin?.length || 0) + 1),
-                      tipo: "jornal" as const,
-                      valor: 50,
-                    };
-                    onChangeJornaleros({
-                      ...jornaleros,
-                      personalAdmin: [
-                        ...(jornaleros.personalAdmin || []),
-                        newAdmin,
-                      ],
-                    });
-                  }}
-                  className="flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-1.5 text-[10px] font-black tracking-widest text-white uppercase hover:bg-slate-700"
-                >
-                  <Plus size={12} /> Añadir Personal
-                </button>
-              </div>
-
-              <div className="space-y-3">
-                {(jornaleros.personalAdmin || []).map((admin) => (
-                  <div
-                    key={admin.id}
-                    className="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-950/50 p-3"
-                  >
-                    <div className="flex-1">
-                      <input
-                        className="w-full bg-transparent text-xs font-bold text-white outline-none"
-                        value={admin.nombre}
-                        onChange={(e) => {
-                          const newList = (jornaleros.personalAdmin || []).map(
-                            (a) =>
-                              a.id === admin.id
-                                ? { ...a, nombre: e.target.value }
-                                : a
-                          );
-                          onChangeJornaleros({
-                            ...jornaleros,
-                            personalAdmin: newList,
-                          });
-                        }}
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <select
-                        className="bg-transparent text-[10px] font-bold text-slate-500 outline-none"
-                        value={admin.tipo}
-                        onChange={(e) => {
-                          const newList = (jornaleros.personalAdmin || []).map(
-                            (a) =>
-                              a.id === admin.id
-                                ? {
-                                    ...a,
-                                    tipo: e.target.value as "jornal" | "fijo",
-                                  }
-                                : a
-                          );
-                          onChangeJornaleros({
-                            ...jornaleros,
-                            personalAdmin: newList,
-                          });
-                        }}
-                      >
-                        <option value="jornal">Sueldo Diario</option>
-                        <option value="fijo">Gasto Fijo</option>
-                      </select>
-                      <div className="flex items-center gap-1">
-                        <input
-                          type="number"
-                          className="w-16 bg-transparent text-right text-xs font-black text-blue-400 outline-none"
-                          value={admin.valor}
-                          onChange={(e) => {
-                            const newList = (
-                              jornaleros.personalAdmin || []
-                            ).map((a) =>
-                              a.id === admin.id
-                                ? { ...a, valor: Number(e.target.value) }
-                                : a
-                            );
-                            onChangeJornaleros({
-                              ...jornaleros,
-                              personalAdmin: newList,
-                            });
-                          }}
-                        />
-                        <span className="text-[10px] text-slate-600">
-                          €{admin.tipo === "jornal" ? "/d" : ""}
-                        </span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => {
-                        const newList = (
-                          jornaleros.personalAdmin || []
-                        ).filter((a) => a.id !== admin.id);
-                        onChangeJornaleros({
-                          ...jornaleros,
-                          personalAdmin: newList,
-                        });
-                      }}
-                      className="p-1.5 text-slate-700 hover:text-red-400"
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-                ))}
-                {(!jornaleros.personalAdmin ||
-                  jornaleros.personalAdmin.length === 0) && (
-                  <p className="py-4 text-center text-[10px] italic text-slate-600">
-                    No hay personal administrativo asignado a esta obra.
-                  </p>
-                )}
-              </div>
             </div>
 
             {resumen.resumenJornaleros && (
@@ -1263,6 +1127,112 @@ function TabManoDeObra({
                 </div>
               </div>
             )}
+          </div>
+        )}
+      </div>
+
+      {/* ═══ EQUIPO DE GESTIÓN (INDIRECTOS) ═══ */}
+      <div className="rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-6 transition-colors">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h3 className="flex items-center gap-2 text-sm font-black text-indigo-400 uppercase">
+              💼 Equipo de Gestión y Oficina
+            </h3>
+            <p className="text-[11px] text-slate-400 italic">
+              Personal para compras, inventario y administración (Costes
+              Indirectos).
+            </p>
+          </div>
+          <button
+            onClick={addPersonaAdmin}
+            className="flex items-center gap-2 rounded-lg bg-indigo-600 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow-lg shadow-indigo-900/40"
+          >
+            <Plus size={14} /> Añadir Responsable
+          </button>
+        </div>
+
+        {personalAdmin.length === 0 ? (
+          <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-800 py-8">
+            <p className="text-[10px] font-bold tracking-widest text-slate-600 uppercase">
+              No has añadido personal de gestión
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {personalAdmin.map((p) => (
+              <div
+                key={p.id}
+                className="flex flex-wrap items-end gap-4 rounded-xl border border-slate-800 bg-slate-950/50 p-4"
+              >
+                <div className="min-w-[200px] flex-1">
+                  <label className={labelCls}>Nombre / Rol</label>
+                  <input
+                    placeholder="Ej: Gestor de Compras y Almacén"
+                    className={inputCls}
+                    value={p.nombre}
+                    onChange={(e) =>
+                      updatePersonaAdmin(p.id, { nombre: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="w-[140px]">
+                  <label className={labelCls}>Tipo de Coste</label>
+                  <select
+                    className={inputCls}
+                    value={p.tipo}
+                    onChange={(e) =>
+                      updatePersonaAdmin(p.id, {
+                        tipo: e.target.value as "jornal" | "fijo",
+                      })
+                    }
+                  >
+                    <option value="jornal">Por día</option>
+                    <option value="fijo">Fijo total</option>
+                  </select>
+                </div>
+                <div className="w-[120px]">
+                  <label className={labelCls}>
+                    {p.tipo === "jornal" ? "€ / Día" : "€ Total"}
+                  </label>
+                  <input
+                    type="number"
+                    className={inputCls}
+                    value={p.valor || ""}
+                    onChange={(e) =>
+                      updatePersonaAdmin(p.id, {
+                        valor: Number(e.target.value),
+                      })
+                    }
+                  />
+                </div>
+                <div className="flex h-[40px] items-center gap-4">
+                  <div className="text-right">
+                    <p className="text-[8px] font-bold text-slate-500 uppercase">
+                      Coste Estimado
+                    </p>
+                    <p className="text-xs font-black text-indigo-400">
+                      {formatEur(
+                        p.tipo === "jornal"
+                          ? p.valor *
+                              (resumen.resumenJornaleros?.totalDiasObra || 20)
+                          : p.valor
+                      )}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => removePersonaAdmin(p.id)}
+                    className="text-red-500/50 hover:text-red-500"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+            <p className="mt-2 text-[9px] leading-relaxed text-slate-500 italic">
+              * El coste `&quot;`Por día`&quot;` se calcula basándose en el
+              plazo total estimado de la obra (
+              {resumen.resumenJornaleros?.totalDiasObra || 20} días).
+            </p>
           </div>
         )}
       </div>
@@ -1302,7 +1272,7 @@ function TabManoDeObra({
         <Capitulo
           titulo="Capítulo 2: Albañilería y Tabiques"
           icon="🏛️"
-          categoria="Paredes"
+          categoria="Tabiquería / Pared"
           conceptosSugeridos={[
             ...CORE_CONCEPTOS,
             { label: "Rozas para cables", precio: 15, unidad: "ml" },
@@ -1695,6 +1665,10 @@ export default function PresupuestoPage() {
           partidasExtra={presupuesto.partidasExtra || []}
           onChangePartidasExtra={(partidasExtra) =>
             setPresupuesto({ ...presupuesto, partidasExtra })
+          }
+          personalAdmin={presupuesto.personalAdmin || []}
+          onChangePersonalAdmin={(personalAdmin) =>
+            setPresupuesto({ ...presupuesto, personalAdmin })
           }
           resumen={resumen}
         />

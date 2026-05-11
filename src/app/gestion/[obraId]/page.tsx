@@ -42,8 +42,8 @@ export default function ObraDashboardPage() {
   const adminFeatures = [
     {
       id: "arquitecto",
-      name: "Arquitecto",
-      description: "Cuantificación de materiales y planificación de estancias.",
+      name: "Configuración Técnica",
+      description: "Cuantificación experta de materiales y desglose técnico por estancia.",
       icon: PenTool,
       href: `/gestion/${obra.id}/planificador`,
       active: true,
@@ -52,8 +52,8 @@ export default function ObraDashboardPage() {
     },
     {
       id: "planos",
-      name: "Planos",
-      description: "Visualización y gestión de planos y planimetría técnica.",
+      name: "Planimetría",
+      description: "Repositorio central de planos técnicos y control de versiones para supervisión.",
       icon: Layout,
       href: `/gestion/${obra.id}/planos`,
       active: true,
@@ -61,10 +61,20 @@ export default function ObraDashboardPage() {
       bg: "bg-blue-500/10",
     },
     {
-      id: "presupuesto",
-      name: "Presupuesto",
-      description: "Generación de presupuestos y control de costes.",
+      id: "gastos",
+      name: "Control de Compras",
+      description: "Registro de tickets, facturas y control de flujo de caja de la obra.",
       icon: Calculator,
+      href: `/gestion/${obra.id}/gastos`,
+      active: true,
+      color: "text-amber-500",
+      bg: "bg-amber-500/10",
+    },
+    {
+      id: "presupuesto",
+      name: "Presupuesto Ejecutivo",
+      description: "Gestión de presupuestos, certificación y control de desviaciones.",
+      icon: FileText,
       href: `/gestion/${obra.id}/presupuesto`,
       active: true,
       color: "text-emerald-500",
@@ -72,8 +82,8 @@ export default function ObraDashboardPage() {
     },
     {
       id: "agenda",
-      name: "Agenda y Plazos",
-      description: "Guía técnica de ejecución y cronograma por estancia.",
+      name: "Hitos y Plazos",
+      description: "Cronograma de ejecución crítica y supervisión de calendario de obra.",
       icon: Calendar,
       href: `/gestion/${obra.id}/agenda`,
       active: true,
@@ -81,19 +91,9 @@ export default function ObraDashboardPage() {
       bg: "bg-blue-500/10",
     },
     {
-      id: "documentos",
-      name: "Documentación",
-      description: "Planos, contratos y permisos de la obra.",
-      icon: FileText,
-      href: "#",
-      active: false,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10",
-    },
-    {
       id: "fotos",
-      name: "Diario Visual",
-      description: "Seguimiento fotográfico del progreso.",
+      name: "Diario de Obra",
+      description: "Bitácora gráfica para el control de calidad y certificación visual.",
       icon: Camera,
       href: "#",
       active: false,
@@ -102,8 +102,8 @@ export default function ObraDashboardPage() {
     },
     {
       id: "equipo",
-      name: "Equipo",
-      description: "Gestión de operarios y subcontratas.",
+      name: "Gestión de Actores",
+      description: "Directorio de subcontratas, responsables y control de personal.",
       icon: Users,
       href: "#",
       active: false,
@@ -111,6 +111,8 @@ export default function ObraDashboardPage() {
       bg: "bg-indigo-500/10",
     },
   ];
+
+  const totalGastado = obra.gastos?.reduce((acc, g) => acc + g.importe, 0) || 0;
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-8 pb-32">
@@ -163,9 +165,14 @@ export default function ObraDashboardPage() {
           </div>
           <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4">
             <p className="mb-1 text-[10px] font-bold tracking-widest text-slate-500 uppercase">
-              Alertas
+              Total Gastado
             </p>
-            <p className="text-xl font-black text-red-500">0</p>
+            <p className="text-xl font-black text-amber-500">
+              {totalGastado.toLocaleString("es-ES", {
+                style: "currency",
+                currency: "EUR",
+              })}
+            </p>
           </div>
         </div>
       </section>

@@ -10,15 +10,17 @@ import {
   Calendar,
   Layers,
   ChevronRight,
+  Tag,
 } from "lucide-react";
 import { getObras, createObra, deleteObra } from "@/lib/arquitecto-store";
-import type { Obra } from "@/lib/arquitecto-types";
+import { TIPOS_OBRA, type Obra, type TipoObra } from "@/lib/arquitecto-types";
 
 export default function GestionPage() {
   const [obras, setObras] = useState<Obra[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [nuevoNombre, setNuevoNombre] = useState("");
   const [nuevaDireccion, setNuevaDireccion] = useState("");
+  const [nuevoTipo, setNuevoTipo] = useState<TipoObra>("reforma-integral");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   useEffect(() => {
@@ -27,10 +29,11 @@ export default function GestionPage() {
 
   const handleCrear = () => {
     if (!nuevoNombre.trim()) return;
-    createObra(nuevoNombre.trim(), nuevaDireccion.trim());
+    createObra(nuevoNombre.trim(), nuevaDireccion.trim(), nuevoTipo);
     setObras(getObras());
     setNuevoNombre("");
     setNuevaDireccion("");
+    setNuevoTipo("reforma-integral");
     setShowModal(false);
   };
 
@@ -80,72 +83,82 @@ export default function GestionPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {obras.map((obra) => (
-            <div
-              key={obra.id}
-              className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 transition-all hover:border-slate-600"
-            >
-              <Link
-                href={`/gestion/${obra.id}`}
-                className="flex items-center gap-4 p-5"
-              >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-amber-500/10">
-                  <Layers size={22} className="text-amber-400" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="truncate text-base font-black text-white">
-                    {obra.nombre}
-                  </h3>
-                  {obra.direccion && (
-                    <p className="flex items-center gap-1 truncate text-xs text-slate-400">
-                      <MapPin size={10} /> {obra.direccion}
-                    </p>
-                  )}
-                  <div className="mt-1 flex items-center gap-3 text-[10px] text-slate-500">
-                    <span className="flex items-center gap-1">
-                      <PenTool size={10} /> Arquitecto Activo
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar size={10} />{" "}
-                      {new Date(obra.updatedAt).toLocaleDateString("es-ES")}
-                    </span>
-                  </div>
-                </div>
-                <ChevronRight
-                  size={18}
-                  className="shrink-0 text-slate-600 transition-colors group-hover:text-amber-400"
-                />
-              </Link>
+          {obras.map((obra) => {
+            const tipoLabel =
+              TIPOS_OBRA.find((t) => t.value === obra.tipo)?.label || obra.tipo;
 
-              {/* Botón Eliminar */}
-              {confirmDelete === obra.id ? (
-                <div className="flex items-center gap-2 border-t border-slate-800 px-5 py-3">
-                  <p className="flex-1 text-xs text-red-400">
-                    ¿Eliminar esta obra y todas sus estancias?
-                  </p>
-                  <button
-                    onClick={() => handleEliminar(obra.id)}
-                    className="rounded bg-red-600 px-3 py-1 text-[10px] font-bold text-white"
-                  >
-                    Sí, eliminar
-                  </button>
-                  <button
-                    onClick={() => setConfirmDelete(null)}
-                    className="rounded bg-slate-700 px-3 py-1 text-[10px] font-bold text-white"
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => setConfirmDelete(obra.id)}
-                  className="absolute right-14 top-5 rounded p-1 text-slate-700 transition-colors hover:text-red-500"
+            return (
+              <div
+                key={obra.id}
+                className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 transition-all hover:border-slate-600"
+              >
+                <Link
+                  href={`/gestion/${obra.id}`}
+                  className="flex items-center gap-4 p-5"
                 >
-                  <Trash2 size={14} />
-                </button>
-              )}
-            </div>
-          ))}
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-amber-500/10">
+                    <Layers size={22} className="text-amber-400" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1 flex items-center gap-2">
+                      <h3 className="truncate text-base font-black text-white">
+                        {obra.nombre}
+                      </h3>
+                      <span className="flex items-center gap-1 rounded bg-slate-800 px-2 py-0.5 text-[8px] font-bold text-amber-500 uppercase tracking-tighter">
+                        <Tag size={8} /> {tipoLabel}
+                      </span>
+                    </div>
+                    {obra.direccion && (
+                      <p className="flex items-center gap-1 truncate text-xs text-slate-400">
+                        <MapPin size={10} /> {obra.direccion}
+                      </p>
+                    )}
+                    <div className="mt-1 flex items-center gap-3 text-[10px] text-slate-500">
+                      <span className="flex items-center gap-1">
+                        <PenTool size={10} /> Arquitecto Activo
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Calendar size={10} />{" "}
+                        {new Date(obra.updatedAt).toLocaleDateString("es-ES")}
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronRight
+                    size={18}
+                    className="shrink-0 text-slate-600 transition-colors group-hover:text-amber-400"
+                  />
+                </Link>
+
+                {/* Botón Eliminar */}
+                {confirmDelete === obra.id ? (
+                  <div className="flex items-center gap-2 border-t border-slate-800 px-5 py-3">
+                    <p className="flex-1 text-xs text-red-400">
+                      ¿Eliminar esta obra y todas sus estancias?
+                    </p>
+                    <button
+                      onClick={() => handleEliminar(obra.id)}
+                      className="rounded bg-red-600 px-3 py-1 text-[10px] font-bold text-white"
+                    >
+                      Sí, eliminar
+                    </button>
+                    <button
+                      onClick={() => setConfirmDelete(null)}
+                      className="rounded bg-slate-700 px-3 py-1 text-[10px] font-bold text-white"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setConfirmDelete(obra.id)}
+                    className="absolute right-14 top-5 rounded p-1 text-slate-700 transition-colors hover:text-red-500"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -169,6 +182,22 @@ export default function GestionPage() {
                   placeholder="Ej: Reforma Piso Eixample"
                   autoFocus
                 />
+              </div>
+              <div>
+                <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
+                  Tipo de Obra *
+                </label>
+                <select
+                  value={nuevoTipo}
+                  onChange={(e) => setNuevoTipo(e.target.value as TipoObra)}
+                  className="focus:border-primary w-full rounded-lg border border-slate-700 bg-slate-950 p-3 text-sm text-white outline-none"
+                >
+                  {TIPOS_OBRA.map((t) => (
+                    <option key={t.value} value={t.value}>
+                      {t.label}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="mb-2 block text-xs font-bold tracking-widest text-slate-300 uppercase">
@@ -196,6 +225,7 @@ export default function GestionPage() {
                   setShowModal(false);
                   setNuevoNombre("");
                   setNuevaDireccion("");
+                  setNuevoTipo("reforma-integral");
                 }}
                 className="flex-1 rounded-lg border border-slate-700 py-3 text-xs font-black tracking-widest text-slate-400 uppercase"
               >

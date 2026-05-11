@@ -14,6 +14,8 @@ export interface TarifasManoDeObra {
   enfoscado: number;            // Enfoscado / revoque de paredes
   guarnecidoYeso: number;       // Guarnecido de yeso en paredes
   demolicionSuelo: number;      // Picado de suelo existente
+  demolicionTabique: number;    // Picado de tabiquería
+  desescombro: number;          // Carga y bajada de escombro
   nivelado: number;             // Nivelado / autonivelante
 }
 
@@ -28,7 +30,9 @@ export const TARIFAS_DEFECTO: TarifasManoDeObra = {
   pintura: 8,
   enfoscado: 15,
   guarnecidoYeso: 12,
-  demolicionSuelo: 10,
+  demolicionSuelo: 12,
+  demolicionTabique: 15,
+  desescombro: 8,
   nivelado: 12,
 };
 
@@ -52,7 +56,6 @@ export interface ConfigJornaleros {
   // % de tiempo no productivo por jornada (preparación, limpieza, esperas, etc.)
   porcentajeTiempoMuerto: number;
   trabajosExcluidos: string[]; // Claves de RENDIMIENTOS_MEDIOS que NO hace la cuadrilla
-  personalAdmin?: PersonalAdmin[]; // Personal de oficina/gestión
 }
 
 export const CONFIG_JORNALEROS_DEFECTO: ConfigJornaleros = {
@@ -63,23 +66,24 @@ export const CONFIG_JORNALEROS_DEFECTO: ConfigJornaleros = {
   trabajaSabados: false,
   porcentajeTiempoMuerto: 20,
   trabajosExcluidos: [],
-  personalAdmin: [],
 };
 
 // Rendimiento medio en m²/día para 1 operario a rendimiento "normal"
 // Basado en tablas de rendimientos de construcción del sector español
-export const RENDIMIENTOS_MEDIOS: Record<string, { m2dia: number; label: string }> = {
-  demolicionSuelo:    { m2dia: 12, label: "Demolición de suelo" },
-  nivelado:           { m2dia: 20, label: "Nivelado / Autonivelante" },
-  solado:             { m2dia: 10, label: "Colocación cerámica suelo" },
-  alicatado:          { m2dia: 8,  label: "Alicatado cerámica pared" },
-  tabiqueriaPladur:   { m2dia: 10, label: "Tabiquería Pladur" },
-  tabioqueriaLadrillo:{ m2dia: 6,  label: "Tabiquería Ladrillo" },
-  enfoscado:          { m2dia: 12, label: "Enfoscado / Revoque" },
-  guarnecidoYeso:     { m2dia: 15, label: "Guarnecido de Yeso" },
-  falsoTechoPladur:   { m2dia: 10, label: "Falso techo Pladur" },
-  enlucidoYesoTecho:  { m2dia: 12, label: "Enlucido yeso techo" },
-  pintura:            { m2dia: 25, label: "Pintura" },
+export const RENDIMIENTOS_MEDIOS: Record<string, { m2dia: number; label: string; desc: string }> = {
+  demolicionSuelo:    { m2dia: 10, label: "Demolición de suelo y rodapié", desc: "Quitar el suelo viejo y los zócalos (la tira que va en la base de la pared)." },
+  demolicionTabique:  { m2dia: 8,  label: "Tirar Tabiquería / Pared", desc: "Tirar paredes viejas de ladrillo o pladur para abrir espacios nuevos." },
+  desescombro:        { m2dia: 6,  label: "Desescombro y limpieza", desc: "Recoger los restos, meterlos en sacos y llevarlos al contenedor de la calle." },
+  nivelado:           { m2dia: 20, label: "Nivelado / Autonivelante", desc: "Echar una pasta para que el suelo quede plano antes de poner el nuevo." },
+  solado:             { m2dia: 10, label: "Solado / Suelo Cerámico", desc: "Poner el suelo nuevo (baldosas, gres, etc.) y rellenar las juntas." },
+  alicatado:          { m2dia: 8,  label: "Alicatado / Azulejos Pared", desc: "Pegar los azulejos en las paredes (baños/cocinas) y rematar las juntas." },
+  tabiqueriaPladur:   { m2dia: 10, label: "Tabiquería / Pared Pladur", desc: "Hacer paredes nuevas usando placas de yeso y metal (rápido y limpio)." },
+  tabioqueriaLadrillo:{ m2dia: 6,  label: "Tabiquería / Pared Ladrillo", desc: "Levantar paredes nuevas usando ladrillos de toda la vida y cemento." },
+  enfoscado:          { m2dia: 12, label: "Enfoscado / Base Cemento", desc: "Dar una capa de cemento a los ladrillos para dejarlos rectos y duros." },
+  guarnecidoYeso:     { m2dia: 15, label: "Guarnecido / Alisar Pared", desc: "Dar yeso blanco para que la pared quede suave, lisa y lista para pintar." },
+  falsoTechoPladur:   { m2dia: 10, label: "Falso techo Pladur", desc: "Poner un techo nuevo más bajo para tapar cables o poner luces." },
+  enlucidoYesoTecho:  { m2dia: 12, label: "Enlucido / Alisar Techo", desc: "Alisar el techo con yeso para que quede perfecto y sin bultos." },
+  pintura:            { m2dia: 25, label: "Pintura", desc: "Lijar paredes, tapar fallos y dar el color (mínimo 2 manos)." },
 };
 
 // Factores multiplicadores por nivel de rendimiento
@@ -150,6 +154,7 @@ export interface PresupuestoObra {
   obraId: string;
   tarifas: TarifasManoDeObra;
   jornaleros: ConfigJornaleros;
+  personalAdmin: PersonalAdmin[];
   partidasExtra: PartidaManoObra[]; // Partidas añadidas manualmente
   costesAdicionales: CosteAdicional[];
   porcentajeImprevistos: number;
@@ -172,6 +177,7 @@ export interface ResumenPresupuesto {
   totalMateriales: number;
   totalManoDeObra: number;         // Especialistas €/m²
   totalJornaleros: number;         // Cuadrilla por jornales
+  totalAdmin: number;              // Gestión y administración (Universal)
   totalCostesAdicionales: number;
   subtotal: number;
   importeImprevistos: number;

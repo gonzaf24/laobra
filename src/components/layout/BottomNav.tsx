@@ -10,6 +10,7 @@ import {
   Calculator,
   Layout,
   ShieldCheck,
+  HardHat,
 } from "lucide-react";
 
 export default function BottomNav() {
@@ -19,6 +20,7 @@ export default function BottomNav() {
     { name: "Formación", href: "/formaciones", icon: GraduationCap },
     { name: "Estancias", href: "/estancias", icon: Layout },
     { name: "Materiales", href: "/materiales", icon: Box },
+    { name: "Obramat", href: "/obramat", icon: HardHat },
     { name: "Herramientas", href: "/herramientas", icon: Hammer },
     { name: "Cálculos", href: "/calculos", icon: Calculator },
     { name: "Gestión", href: "/gestion", icon: Layers },

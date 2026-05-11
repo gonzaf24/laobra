@@ -555,7 +555,7 @@ function EditorParedes({
         >
           <div className="flex items-center justify-between">
             <p className="text-[9px] font-black tracking-widest text-sky-400 uppercase">
-              Configuración de Paredes{" "}
+              Configuración de Tabiquería / Pared{" "}
               {est.paredes.length > 1 ? `#${i + 1}` : ""}
             </p>
             {est.paredes.length > 1 && (
@@ -569,7 +569,7 @@ function EditorParedes({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className={labelCls}>m² Paredes</label>
+              <label className={labelCls}>m² Tabiquería / Pared</label>
               <input
                 type="number"
                 className={inputCls}
@@ -656,38 +656,52 @@ function EditorParedes({
               )}
           </div>
           {/* Opciones Ladrillo: Enfoscado y Yeso */}
-          {!esPladur(s.tipo) && (
-            <div className="flex flex-wrap gap-3 border-t border-sky-500/10 pt-3">
-              <label className="flex cursor-pointer items-center gap-2 text-xs text-slate-300">
-                <input
-                  type="checkbox"
-                  checked={s.necesitaEnfoscado || false}
-                  onChange={(e) =>
-                    updateItem(i, { necesitaEnfoscado: e.target.checked })
-                  }
-                  className="h-3.5 w-3.5 accent-amber-400"
-                />
-                <span>
-                  Capa base de cemento{" "}
-                  <span className="text-slate-500">(Nivelar pared)</span>
-                </span>
-              </label>
-              <label className="flex cursor-pointer items-center gap-2 text-xs text-slate-300">
-                <input
-                  type="checkbox"
-                  checked={s.necesitaGuarnecidoYeso || false}
-                  onChange={(e) =>
-                    updateItem(i, { necesitaGuarnecidoYeso: e.target.checked })
-                  }
-                  className="h-3.5 w-3.5 accent-yellow-400"
-                />
-                <span>
-                  Alisado final con yeso{" "}
-                  <span className="text-slate-500">(Para pintar)</span>
-                </span>
-              </label>
-            </div>
-          )}
+          <div className="flex flex-wrap gap-3 border-t border-sky-500/10 pt-3">
+            <label className="flex cursor-pointer items-center gap-2 text-xs text-slate-300">
+              <input
+                type="checkbox"
+                checked={s.necesitaDemolicion || false}
+                onChange={(e) =>
+                  updateItem(i, { necesitaDemolicion: e.target.checked })
+                }
+                className="h-3.5 w-3.5 accent-red-500"
+              />
+              <span className="font-bold text-red-400">Picar pared existente</span>
+            </label>
+
+            {!esPladur(s.tipo) && !s.necesitaDemolicion && (
+              <>
+                <label className="flex cursor-pointer items-center gap-2 text-xs text-slate-300">
+                  <input
+                    type="checkbox"
+                    checked={s.necesitaEnfoscado || false}
+                    onChange={(e) =>
+                      updateItem(i, { necesitaEnfoscado: e.target.checked })
+                    }
+                    className="h-3.5 w-3.5 accent-amber-400"
+                  />
+                  <span>
+                    Capa base de cemento{" "}
+                    <span className="text-slate-500">(Nivelar pared)</span>
+                  </span>
+                </label>
+                <label className="flex cursor-pointer items-center gap-2 text-xs text-slate-300">
+                  <input
+                    type="checkbox"
+                    checked={s.necesitaGuarnecidoYeso || false}
+                    onChange={(e) =>
+                      updateItem(i, { necesitaGuarnecidoYeso: e.target.checked })
+                    }
+                    className="h-3.5 w-3.5 accent-yellow-400"
+                  />
+                  <span>
+                    Alisado final con yeso{" "}
+                    <span className="text-slate-500">(Para pintar)</span>
+                  </span>
+                </label>
+              </>
+            )}
+          </div>
           {/* Tip */}
           {esPladur(s.tipo) && (
             <div className="mt-1 rounded border border-sky-500/10 bg-sky-900/30 p-2 text-[10px] leading-relaxed text-sky-200/80">
@@ -1119,7 +1133,7 @@ function EditorPintura({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className={labelCls}>m² Paredes</label>
+              <label className={labelCls}>m² Tabiquería / Pared</label>
               <input
                 type="number"
                 className={inputCls}
@@ -1386,12 +1400,12 @@ function PanelEstancia({
             <Toggle
               on={est.paredes.length > 0}
               onToggle={() => toggleSection("paredes")}
-              label="Paredes"
+              label="Tabiquería / Pared"
             />
             <Toggle
               on={est.alicatado.length > 0}
               onToggle={() => toggleSection("alicatado")}
-              label="Cerámica Pared"
+              label="Alicatado / Azulejos Pared"
             />
             <Toggle
               on={est.techo.length > 0}
@@ -1652,7 +1666,7 @@ function ResumenGlobal({ obra }: { obra: Obra }) {
                       )}
                       {m2Pared > 0 && (
                         <li>
-                          <b>Paredes Base:</b> {m2Pared} m² medidos.
+                          <b>Tabiquería / Pared Base:</b> {m2Pared} m² medidos.
                         </li>
                       )}
                       {m2CeramicaP > 0 && (

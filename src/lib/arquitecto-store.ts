@@ -5,6 +5,7 @@
 import {
   Obra,
   EstanciaObra,
+  TipoObra,
   crearObraDefecto,
   crearEstanciaDefecto,
 } from "./arquitecto-types";
@@ -20,21 +21,28 @@ export function getObras(): Obra[] {
     if (!raw) return [];
     const obras: Obra[] = JSON.parse(raw);
     
-    // Migración transparente para multi-secciones
+    // Migración transparente para multi-secciones y nuevos campos
     return obras.map((obra) => {
       if (!obra.planos) obra.planos = [];
+      if (!obra.tipo) obra.tipo = "reforma-integral"; // Default para obras antiguas
+      if (!obra.gastos) obra.gastos = []; // Nueva sección de gastos
       if (obra.estancias) {
         obra.estancias = obra.estancias.map((est) => {
-          if (!Array.isArray(est.suelo))
-            est.suelo = (est.suelo as any)?.habilitado ? [est.suelo] : [];
-          if (!Array.isArray(est.paredes))
-            est.paredes = (est.paredes as any)?.habilitado ? [est.paredes] : [];
-          if (!Array.isArray(est.alicatado))
-            est.alicatado = (est.alicatado as any)?.habilitado ? [est.alicatado] : [];
-          if (!Array.isArray(est.techo))
-            est.techo = (est.techo as any)?.habilitado ? [est.techo] : [];
-          if (!Array.isArray(est.pintura))
-            est.pintura = (est.pintura as any)?.habilitado ? [est.pintura] : [];
+          // Función auxiliar para migrar objetos antiguos a arrays
+          const migrate = (val: unknown) => {
+            if (Array.isArray(val)) return val;
+            if (val && typeof val === "object" && "habilitado" in (val as object) && (val as {habilitado: boolean}).habilitado) {
+              return [val];
+            }
+            return [];
+          };
+
+          est.suelo = migrate(est.suelo);
+          est.paredes = migrate(est.paredes);
+          est.alicatado = migrate(est.alicatado);
+          est.techo = migrate(est.techo);
+          est.pintura = migrate(est.pintura);
+          
           return est;
         });
       }
@@ -72,10 +80,15 @@ export function deleteObra(id: string) {
   persistObras(getObras().filter((o) => o.id !== id));
 }
 
-export function createObra(nombre: string, direccion: string = ""): Obra {
+export function createObra(
+  nombre: string,
+  direccion: string = "",
+  tipo: TipoObra = "reforma-integral"
+): Obra {
   const obra = crearObraDefecto();
   obra.nombre = nombre;
   obra.direccion = direccion;
+  obra.tipo = tipo;
   return saveObra(obra);
 }
 

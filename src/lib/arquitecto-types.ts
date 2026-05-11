@@ -67,6 +67,7 @@ export interface SeccionParedes {
   necesitaGuarnecidoYeso: boolean;             // ¿Capa de yeso posterior?
   // ── Común ──
   alturaMedia: number;                         // Altura en metros (para canales)
+  necesitaDemolicion: boolean;                 // ¿Hay que tirar esta pared?
 }
 
 // ── Sección Alicatado (Cerámica en Paredes) ──
@@ -128,15 +129,43 @@ export interface PlanoObra {
   fecha: string;
 }
 
+export type TipoObra =
+  | "reforma-integral"
+  | "reforma-parcial"
+  | "acondicionamiento"
+  | "obra-nueva"
+  | "rehabilitacion-energetica";
+
+export const TIPOS_OBRA: { value: TipoObra; label: string }[] = [
+  { value: "reforma-integral", label: "Reforma Integral" },
+  { value: "reforma-parcial", label: "Reforma Parcial (Cocina/Baños)" },
+  { value: "acondicionamiento", label: "Acondicionamiento (Lavado de cara)" },
+  { value: "obra-nueva", label: "Obra Nueva / Ampliación" },
+  { value: "rehabilitacion-energetica", label: "Rehabilitación Energética" },
+];
+
+export interface GastoObra {
+  id: string;
+  concepto: string;
+  importe: number;
+  categoria: "materiales" | "mano-de-obra" | "servicios" | "otros";
+  fecha: string;
+  fotoUrl?: string; // Base64 del ticket/factura
+  proveedor?: string;
+  notas?: string; // Detalle de materiales o texto libre
+}
+
 // ── Obra Completa ──
 export interface Obra {
   id: string;
   nombre: string;
   direccion: string;
+  tipo: TipoObra;
   createdAt: string;
   updatedAt: string;
   estancias: EstanciaObra[];
   planos?: PlanoObra[];
+  gastos: GastoObra[];
 }
 
 // ─────────────────────────────────────────────────
@@ -170,6 +199,7 @@ export function crearParedesDefecto(): SeccionParedes {
     necesitaEnfoscado: false,
     necesitaGuarnecidoYeso: false,
     alturaMedia: 2.5,
+    necesitaDemolicion: false,
   };
 }
 
@@ -228,8 +258,10 @@ export function crearObraDefecto(): Obra {
     id: crypto.randomUUID(),
     nombre: "",
     direccion: "",
+    tipo: "reforma-integral",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     estancias: [],
+    gastos: [],
   };
 }

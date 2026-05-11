@@ -7,12 +7,14 @@ export interface ObramatCategoria {
   id: string;
   nombre: string;
   subcategorias: string[];
+  pdfPath: string; // Ruta al PDF específico de esta sección
 }
 
 export interface ObramatProducto {
-  sku: string;         // Referencia exacta Obramat
+  sku: string; // Referencia exacta Obramat
   nombre: string;
-  formato: string;     // ej. "Saco 25kg", "Caja 1.4m²"
+  marca?: string; // Marca o Fabricante
+  formato: string; // ej. "Saco 25kg", "Caja 1.4m²"
   precioUnitario: number;
   precioMetro?: number; // Para cerámica o tarifas por metro
   categoriaId: string;
@@ -20,60 +22,125 @@ export interface ObramatProducto {
   paginaCatalogo: number; // Página en el PDF para salto directo
   esEstandar?: boolean; // Indica si es la medida/tipo más común
   tipo?: "estandar" | "frecuente"; // Para destacar en la UI
-  imagen?: string;      // URL de la imagen del producto
+  imagen?: string; // URL de la imagen del producto
+  notas?: string; // Campo de texto libre para observaciones técnicas
 }
 
 export const OBRAMAT_CATEGORIAS: ObramatCategoria[] = [
   {
     id: "materiales",
     nombre: "Materiales de Construcción",
-    subcategorias: ["General", "Morteros", "Cementos", "Ladrillos", "Placas PYL", "Aislamientos", "Accesorios PYL", "Pastas PYL", "Áridos"],
+    subcategorias: [
+      "General",
+      "Morteros",
+      "Cementos",
+      "Ladrillos",
+      "Placas PYL",
+      "Aislamientos",
+      "Accesorios PYL",
+      "Pastas PYL",
+      "Áridos",
+    ],
+    pdfPath: "/catalogo/cat-02-materiales.pdf",
+  },
+  {
+    id: "ventanas",
+    nombre: "Ventanas, puertas, armarios y revestimientos",
+    subcategorias: ["General", "Ventanas", "Puertas", "Armarios"],
+    pdfPath: "/catalogo/cat-03-ventanas.pdf",
   },
   {
     id: "cocinas",
     nombre: "Cocinas",
     subcategorias: ["General", "Encimeras", "Fregaderos", "Grifería"],
-  },
-  {
-    id: "ceramica",
-    nombre: "Cerámica",
-    subcategorias: ["General", "Suelos", "Revestimientos", "Rodapiés", "Pavimentos", "Suelos Exteriores", "Colocación"],
-  },
-  {
-    id: "banos",
-    nombre: "Baños",
-    subcategorias: ["General", "Sanitarios", "Duchas", "Mobiliario", "Accesorios"],
-  },
-  {
-    id: "pintura",
-    nombre: "Pintura",
-    subcategorias: ["General", "Interior", "Exterior", "Preparación", "Selladores"],
-  },
-  {
-    id: "electricidad",
-    nombre: "Electricidad e Iluminación",
-    subcategorias: ["General", "Cables", "Mecanismos", "Cuadros"],
-  },
-  {
-    id: "fontaneria",
-    nombre: "Fontanería",
-    subcategorias: ["General", "Tuberías", "Evacuación", "Repuestos"],
+    pdfPath: "/catalogo/cat-04-cocinas.pdf",
   },
   {
     id: "madera",
     nombre: "Madera",
     subcategorias: ["General", "Suelos Laminados", "Puertas", "Listones"],
+    pdfPath: "/catalogo/cat-05-madera.pdf",
+  },
+  {
+    id: "almacenamiento",
+    nombre: "Almacenamiento y Equipamiento",
+    subcategorias: ["General", "Estanterías", "Equipamiento"],
+    pdfPath: "/catalogo/cat-06-almacenamiento.pdf",
+  },
+  {
+    id: "ceramica",
+    nombre: "Cerámica",
+    subcategorias: [
+      "General",
+      "Suelos",
+      "Revestimientos",
+      "Rodapiés",
+      "Pavimentos",
+      "Suelos Exteriores",
+      "Colocación",
+    ],
+    pdfPath: "/catalogo/cat-07-ceramica.pdf",
+  },
+  {
+    id: "pintura",
+    nombre: "Pintura",
+    subcategorias: [
+      "General",
+      "Interior",
+      "Exterior",
+      "Preparación",
+      "Selladores",
+    ],
+    pdfPath: "/catalogo/cat-08-pintura.pdf",
+  },
+  {
+    id: "banos",
+    nombre: "Baños",
+    subcategorias: [
+      "General",
+      "Sanitarios",
+      "Duchas",
+      "Mobiliario",
+      "Accesorios",
+    ],
+    pdfPath: "/catalogo/cat-01-indice.pdf", // Pendiente PDF 9
+  },
+  {
+    id: "fontaneria",
+    nombre: "Fontanería",
+    subcategorias: ["General", "Tuberías", "Evacuación", "Repuestos"],
+    pdfPath: "/catalogo/cat-01-indice.pdf", // Pendiente PDF 10
+  },
+  {
+    id: "climatizacion",
+    nombre: "Calefacción y climatización",
+    subcategorias: ["General", "Calderas", "Radiadores", "Aire Acondicionado"],
+    pdfPath: "/catalogo/cat-11-clima.pdf",
+  },
+  {
+    id: "renovable",
+    nombre: "Energía renovable",
+    subcategorias: ["General", "Solar", "Aerotermia"],
+    pdfPath: "/catalogo/cat-12-renovable.pdf",
+  },
+  {
+    id: "electricidad",
+    nombre: "Electricidad e iluminación",
+    subcategorias: ["General", "Cables", "Mecanismos", "Cuadros"],
+    pdfPath: "/catalogo/cat-13-electricidad.pdf",
   },
   {
     id: "herramientas",
     nombre: "Herramientas",
     subcategorias: ["General", "Eléctrica", "Manual", "Medición"],
+    pdfPath: "/catalogo/cat-14-herramientas.pdf",
   },
   {
     id: "ferreteria",
     nombre: "Ferretería",
     subcategorias: ["General", "Fijaciones", "Cerrajería", "Químicos"],
-  }
+    pdfPath: "/catalogo/cat-15-ferreteria.pdf",
+  },
 ];
 
 export const OBRAMAT_CATALOGO: ObramatProducto[] = [

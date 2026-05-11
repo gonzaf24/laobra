@@ -37,19 +37,23 @@ function getAll(): Record<string, PresupuestoObra> {
 export function getPresupuesto(obraId: string): PresupuestoObra {
   const all = getAll();
   if (all[obraId]) {
-    // Migrar datos antiguos que no tengan campo jornaleros
-    if (!all[obraId].jornaleros) {
-      all[obraId].jornaleros = { ...CONFIG_JORNALEROS_DEFECTO };
+    const p = all[obraId];
+    // Migraciones
+    if (!p.jornaleros) p.jornaleros = { ...CONFIG_JORNALEROS_DEFECTO };
+    if (!p.partidasExtra) p.partidasExtra = [];
+    
+    // Migrar personalAdmin de jornaleros a la raíz si existe
+    if (!p.personalAdmin) {
+      p.personalAdmin = (p.jornaleros as any).personalAdmin || [];
     }
-    if (!all[obraId].partidasExtra) {
-      all[obraId].partidasExtra = [];
-    }
-    return all[obraId];
+    
+    return p;
   }
   return {
     obraId,
     tarifas: { ...TARIFAS_DEFECTO },
     jornaleros: { ...CONFIG_JORNALEROS_DEFECTO },
+    personalAdmin: [],
     partidasExtra: [],
     costesAdicionales: [],
     porcentajeImprevistos: 10,
@@ -218,12 +222,15 @@ function calcularJornaleros(
   // 1. Acumular m² por tipo de trabajo
   const acumulado: Record<string, number> = {};
 
+  let m2DemolicionTotal = 0;
+
   for (const est of obra.estancias) {
     for (const s of est.suelo) {
       if (s.m2 <= 0) continue;
-      if (s.necesitaPicado)
-        acumulado["demolicionSuelo"] =
-          (acumulado["demolicionSuelo"] || 0) + s.m2;
+      if (s.necesitaPicado) {
+        acumulado["demolicionSuelo"] = (acumulado["demolicionSuelo"] || 0) + s.m2;
+        m2DemolicionTotal += s.m2;
+      }
       if (s.soloNivelado) {
         acumulado["nivelado"] = (acumulado["nivelado"] || 0) + s.m2;
       } else {
@@ -234,15 +241,23 @@ function calcularJornaleros(
     }
     for (const p of est.paredes) {
       if (p.m2 <= 0) continue;
-      const key = p.tipo.startsWith("pladur")
-        ? "tabiqueriaPladur"
-        : "tabioqueriaLadrillo";
-      acumulado[key] = (acumulado[key] || 0) + p.m2;
-      if (!p.tipo.startsWith("pladur") && p.necesitaEnfoscado)
-        acumulado["enfoscado"] = (acumulado["enfoscado"] || 0) + p.m2;
-      if (!p.tipo.startsWith("pladur") && p.necesitaGuarnecidoYeso)
-        acumulado["guarnecidoYeso"] = (acumulado["guarnecidoYeso"] || 0) + p.m2;
+
+      if (p.necesitaDemolicion) {
+        acumulado["demolicionTabique"] = (acumulado["demolicionTabique"] || 0) + p.m2;
+        m2DemolicionTotal += p.m2;
+      } else {
+        // Solo construimos si no estamos demoliendo
+        const key = p.tipo.startsWith("pladur")
+          ? "tabiqueriaPladur"
+          : "tabioqueriaLadrillo";
+        acumulado[key] = (acumulado[key] || 0) + p.m2;
+        if (!p.tipo.startsWith("pladur") && p.necesitaEnfoscado)
+          acumulado["enfoscado"] = (acumulado["enfoscado"] || 0) + p.m2;
+        if (!p.tipo.startsWith("pladur") && p.necesitaGuarnecidoYeso)
+          acumulado["guarnecidoYeso"] = (acumulado["guarnecidoYeso"] || 0) + p.m2;
+      }
     }
+    // ... (resto de bucles)
     for (const a of est.alicatado) {
       if (a.m2 <= 0) continue;
       acumulado["alicatado"] = (acumulado["alicatado"] || 0) + a.m2;
@@ -261,6 +276,11 @@ function calcularJornaleros(
       if (m2 <= 0) continue;
       acumulado["pintura"] = (acumulado["pintura"] || 0) + m2;
     }
+  }
+
+  // 1.1. Añadir Desescombro automático
+  if (m2DemolicionTotal > 0) {
+    acumulado["desescombro"] = m2DemolicionTotal;
   }
 
   // 2. Calcular días por tipo de trabajo
@@ -321,6 +341,8 @@ function calcularJornaleros(
   // Ordenar por fases lógicas de obra
   const orden = [
     "demolicionSuelo",
+    "demolicionTabique",
+    "desescombro",
     "nivelado",
     "tabioqueriaLadrillo",
     "tabiqueriaPladur",
@@ -346,21 +368,6 @@ function calcularJornaleros(
   const totalSemanas = totalDiasCalendario / diasPorSemana;
   const costeCuadrilla = Math.ceil(totalJornadasCuadrilla) * config.precioJornal;
 
-  // Cálculo de costes administrativos
-  let costeAdmin = 0;
-  if (config.personalAdmin) {
-    config.personalAdmin.forEach((admin) => {
-      if (admin.tipo === "jornal") {
-        // El coste administrativo por jornal depende de los días totales de la obra
-        costeAdmin += admin.valor * totalDiasCalendario;
-      } else {
-        costeAdmin += admin.valor;
-      }
-    });
-  }
-
-  const costeTotalManoDeObra = costeCuadrilla + costeAdmin;
-
   return {
     lineas,
     totalJornadasCuadrilla: Math.ceil(totalJornadasCuadrilla),
@@ -368,15 +375,15 @@ function calcularJornaleros(
     totalDiasObra: Math.ceil(totalDiasCalendario),
     totalSemanasObra: Math.round(totalSemanas * 10) / 10,
     costeJornalesCuadrilla: costeCuadrilla,
-    costeAdmin: Math.round(costeAdmin),
-    costeTotalManoDeObra: Math.round(costeTotalManoDeObra),
+    costeAdmin: 0, // Se calcula fuera ahora
+    costeTotalManoDeObra: costeCuadrilla,
     // Compatibilidad
     totalDiasOperario: Math.ceil(
       totalJornadasCuadrilla + totalJornadasEspecialistas
     ),
     totalDiasCalendario: Math.ceil(totalDiasCalendario),
     totalSemanasCalendario: Math.round(totalSemanas * 10) / 10,
-    costeTotal: Math.round(costeTotalManoDeObra),
+    costeTotal: costeCuadrilla,
   };
 }
 
@@ -426,8 +433,6 @@ export function calcularPresupuesto(
       presupuesto.partidasExtra
     );
 
-    // En modo jornaleros, el coste total es:
-    // Coste Cuadrilla + Partidas Extra (Subcontratas manuales) + Coste Especialista de trabajos EXCLUIDOS
     const excluidos = presupuesto.jornaleros.trabajosExcluidos || [];
     const nombresManuales = (presupuesto.partidasExtra || []).map(
       (p) => p.nombre
@@ -435,6 +440,8 @@ export function calcularPresupuesto(
 
     const mappingConceptos: Record<string, keyof TarifasManoDeObra> = {
       demolicionSuelo: "demolicionSuelo",
+      demolicionTabique: "demolicionTabique",
+      desescombro: "desescombro",
       nivelado: "nivelado",
       solado: "solado",
       alicatado: "alicatado",
@@ -452,8 +459,6 @@ export function calcularPresupuesto(
         const key = Object.keys(mappingConceptos).find(
           (k) => RENDIMIENTOS_MEDIOS[k]?.label === l.concepto
         );
-        // Excluir si está en el checklist Y NO hay una partida manual con el mismo nombre
-        // (si hay partida manual, su coste ya va en totalPartidasExtra)
         const isExcludedByChecklist = key && excluidos.includes(key);
         const hasManualEntry = nombresManuales.includes(l.concepto);
 
@@ -467,30 +472,56 @@ export function calcularPresupuesto(
       extraEspecialistasExcluidos;
   }
 
-  // 4. Costes adicionales
+  // 4. Personal de Administración (Universal)
+  // Calculamos el coste administrativo basándonos en el plazo estimado
+  const diasObra = resumenJornaleros?.totalDiasObra || 20; // Default 20 días si no hay cálculo temporal
+  let totalAdmin = 0;
+  if (presupuesto.personalAdmin) {
+    presupuesto.personalAdmin.forEach((admin) => {
+      if (admin.tipo === "jornal") {
+        totalAdmin += admin.valor * diasObra;
+      } else {
+        totalAdmin += admin.valor;
+      }
+    });
+  }
+
+  // 5. Costes adicionales
   const totalCostesAdicionales = presupuesto.costesAdicionales.reduce(
     (sum, c) => sum + c.cantidad * c.precioUnitario,
     0
   );
 
-  // 5. Subtotal (usa jornaleros SI está activo, si no usa especialistas)
+  // 6. Subtotal
   const manoDeObraEfectiva = presupuesto.jornaleros?.activo
     ? totalJornaleros
     : totalManoDeObra;
-  const subtotal =
-    totalMateriales + manoDeObraEfectiva + totalCostesAdicionales;
 
-  // 6. Imprevistos y beneficio
+  const subtotal =
+    totalMateriales +
+    manoDeObraEfectiva +
+    totalAdmin + // Ahora se suma por separado para claridad
+    totalCostesAdicionales;
+
+  // 7. Imprevistos y beneficio
   const importeImprevistos =
     subtotal * (presupuesto.porcentajeImprevistos / 100);
   const importeBeneficio =
     (subtotal + importeImprevistos) * (presupuesto.porcentajeBeneficio / 100);
   const totalGeneral = subtotal + importeImprevistos + importeBeneficio;
 
+  // Actualizamos el resumenJornaleros si existe con el coste real de admin
+  if (resumenJornaleros) {
+    resumenJornaleros.costeAdmin = totalAdmin;
+    resumenJornaleros.costeTotalManoDeObra =
+      resumenJornaleros.costeJornalesCuadrilla + totalAdmin;
+  }
+
   return {
     totalMateriales,
     totalManoDeObra,
     totalJornaleros,
+    totalAdmin, // Nuevo campo en el resumen
     totalCostesAdicionales,
     subtotal,
     importeImprevistos,
