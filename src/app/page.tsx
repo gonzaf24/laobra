@@ -8,7 +8,8 @@ import {
   Hammer,
   HelpCircle,
   Zap,
-  Calculator
+  Calculator,
+  BookOpen
 } from "lucide-react";
 
 export default function Home() {
@@ -217,6 +218,43 @@ export default function Home() {
               </div>
             </div>
             <ArrowRight className="text-violet-400 absolute top-6 right-5 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" size={18} />
+          </Link>
+
+          {/* 6. Obramat */}
+          <Link
+            href="/obramat"
+            className="group border-amber-500/30 from-amber-500/10 hover:border-amber-500/50 relative overflow-hidden rounded-xl border bg-linear-to-br to-slate-900 p-5 shadow-[0_0_20px_rgba(245,158,11,0.05)] transition-all hover:-translate-y-0.5"
+          >
+            <div className="relative z-10">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="bg-amber-500 rounded-lg p-2 text-slate-900 shadow-sm">
+                  <BookOpen size={18} />
+                </div>
+                <h3 className="text-lg font-black text-white uppercase italic tracking-tight">
+                  Catálogo Obramat
+                </h3>
+              </div>
+              
+              <div className="space-y-3 mt-4 border-t border-white/5 pt-3">
+                <div>
+                  <p className="flex items-center gap-1.5 text-[9px] font-black text-amber-500 uppercase tracking-widest mb-1">
+                    <HelpCircle size={10} /> ¿Qué encontrarás?
+                  </p>
+                  <p className="text-text-muted text-[11px] leading-relaxed">
+                    El catálogo oficial de Obramat integrado en la app. Sección en evolución para el asistente inteligente.
+                  </p>
+                </div>
+                <div>
+                  <p className="flex items-center gap-1.5 text-[9px] font-black text-amber-500 uppercase tracking-widest mb-1">
+                    <Zap size={10} /> ¿Para qué sirve?
+                  </p>
+                  <p className="text-text-muted text-[11px] leading-relaxed">
+                    Para explorar el PDF 2026 sin salir de la plataforma y buscar referencias rápidamente.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <ArrowRight className="text-amber-500 absolute top-6 right-5 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" size={18} />
           </Link>
         </div>
       </section>

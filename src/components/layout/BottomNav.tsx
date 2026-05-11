@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import {
   Hammer,
   Box,
-  Layout,
+  Layers,
   GraduationCap,
   Calculator,
-  PenTool
+  Layout,
 } from "lucide-react";
 
 export default function BottomNav() {
@@ -20,7 +20,7 @@ export default function BottomNav() {
     { name: "Materiales", href: "/materiales", icon: Box },
     { name: "Herramientas", href: "/herramientas", icon: Hammer },
     { name: "Cálculos", href: "/calculos", icon: Calculator },
-    { name: "Arquitecto", href: "/arquitecto", icon: PenTool },
+    { name: "Gestión", href: "/gestion", icon: Layers },
   ];
 
   return (

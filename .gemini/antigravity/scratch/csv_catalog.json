@@ -1,0 +1,212 @@
+[
+  {
+    "sku": "10279521",
+    "nombre": "3.5 x 20 1.000",
+    "categoriaId": "materiales",
+    "precio": 0.01,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10982223",
+    "nombre": "3.5 x 35 1000",
+    "categoriaId": "materiales",
+    "precio": 0.01,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10550281",
+    "nombre": "4 x 25 1.000",
+    "categoriaId": "materiales",
+    "precio": 0.02,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25094725",
+    "nombre": "Mango en ABS oro. 3 funciones. Flexo PVC 1,50m. Barra en acero inoxidable 70,5cm.",
+    "categoriaId": "ventanas",
+    "precio": 1.5,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10082786",
+    "nombre": "Aluminio 40",
+    "categoriaId": "ventanas",
+    "precio": 1.55,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10082793",
+    "nombre": "Aluminio 50",
+    "categoriaId": "ventanas",
+    "precio": 1.6,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10972976",
+    "nombre": "Para campana telescopica 2 unidades 10€ 10€\"",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25114131",
+    "nombre": "Para campana piramidal cata 1 unidades 15€ 15€",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25046406",
+    "nombre": "fregaderos obstruidos. (64)\"",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10693354",
+    "nombre": "Boquilla 313 Esmaltes",
+    "categoriaId": "pintura",
+    "precio": 49.95,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25098351",
+    "nombre": "sintéticas de decoración, limpieza de rodillos, brochas, etc. (1) (64)\"",
+    "categoriaId": "pintura",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25066492",
+    "nombre": "para rodillos superficies lisas y rugosas. (1)\"",
+    "categoriaId": "pintura",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25101359",
+    "nombre": "Pack WC en porcelana blanca.",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25077841",
+    "nombre": "Pack WC en porcelana blanca. \"",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25113851",
+    "nombre": "Pack WC en porcelana blanca. \"",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10922534",
+    "nombre": "incluido.Valvula de seguridad \"",
+    "categoriaId": "fontaneria",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25046415",
+    "nombre": "y desagues. (64)\"",
+    "categoriaId": "fontaneria",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25053041",
+    "nombre": "cobre. Cartucho cerámico Ø35mm.",
+    "categoriaId": "fontaneria",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25050777",
+    "nombre": "termo endurecida lacada. \"",
+    "categoriaId": "climatizacion",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25055287",
+    "nombre": "45.35x35cm. Asiento y tapa en resina termoendurecida lacada.",
+    "categoriaId": "climatizacion",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25050775",
+    "nombre": "termo endurecida lacada. \"",
+    "categoriaId": "climatizacion",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25056315",
+    "nombre": "autoajustable que se utiliza para terminales de cable de 0,25 a 10mm2 \"",
+    "categoriaId": "electricidad",
+    "precio": 0.25,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10381686",
+    "nombre": "4 tomas. Sin cable. \"",
+    "categoriaId": "electricidad",
+    "precio": 9.4,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10701894",
+    "nombre": "190mm. Para entallar terminales Western de 6 y 8 polos tipo RJ 11/12 (ancho 9,65 mm) y RJ 45 (ancho 11,68 mm). Guillotina y cuchilla pelacables para cables planos de 6 y 12 mm de longitud. Con dispositivo adicional para pelar cables redondos.",
+    "categoriaId": "electricidad",
+    "precio": 9.65,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10793174",
+    "nombre": "Para niveles láser rotativos. Altura abierto: 1,53m Altura cerrado: 74,6m \"",
+    "categoriaId": "herramientas",
+    "precio": 1.53,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10726240",
+    "nombre": "radiantes y 9 niveles de potencia. \"",
+    "categoriaId": "herramientas",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25029094",
+    "nombre": "5 niveles de potencia. Cocción microondas + grill. Descongelación automática por tiempo y peso. Marco de acero inoxidable integrado. Volumen 20 L.",
+    "categoriaId": "herramientas",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10505621",
+    "nombre": "Utiliza clavos de Ø 0,84mm hasta 50 mm.",
+    "categoriaId": "ferreteria",
+    "precio": 0.84,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10984365",
+    "nombre": "Tipo escuadra + tornillo U",
+    "categoriaId": "ferreteria",
+    "precio": 3.36,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10788253",
+    "nombre": "10 con tornillo",
+    "categoriaId": "ferreteria",
+    "precio": 6.65,
+    "tipo": "frecuente"
+  }
+]

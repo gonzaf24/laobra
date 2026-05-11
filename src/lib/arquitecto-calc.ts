@@ -13,6 +13,8 @@ import type {
   SeccionPintura,
 } from "./arquitecto-types";
 
+import { MATERIALS_DATA } from "./materials-data";
+
 // ─────────────────────────────────────────────────
 // Tablas de referencia
 // ─────────────────────────────────────────────────
@@ -53,6 +55,7 @@ export interface LineaMaterial {
   unidad: string;
   categoria: string;
   materialId?: string;
+  m2Referencia?: number;
 }
 
 export interface ResultadoEstancia {
@@ -129,6 +132,7 @@ function calcularCeramica(
       unidad: "piezas",
       categoria: "Cerámica",
       materialId: seccion.tipoBaldosa === "gres" ? "gres-porcelanico" : "azulejo-pasta",
+      m2Referencia: m2ConMerma,
     });
 
     // ── Cola ──
@@ -543,4 +547,71 @@ export function calcularObra(obra: Obra): ResultadoObra {
   );
 
   return { porEstancia, totales };
+}
+
+export interface LineaConCoste extends LineaMaterial {
+  precioUnitario: number;
+  costeTotal: number;
+  formatoAplicado: string;
+}
+
+export function enriquecerConCostes(
+  lineas: LineaMaterial[],
+  customPrices: Record<string, number>
+): LineaConCoste[] {
+  return lineas.map((linea) => {
+    let costeTotal = 0;
+    let precioUnitario = 0;
+    let formatoAplicado = "-";
+
+    const materialDef = MATERIALS_DATA.find((m) => m.id === linea.materialId);
+
+    if (materialDef && materialDef.precios && materialDef.precios.length > 0) {
+      // Tomamos el primer formato como referencia base comercial
+      const formatoBase = materialDef.precios[0];
+      const customKey = `${materialDef.id}_${formatoBase.formato}`;
+      const precioComercial = customPrices[customKey] !== undefined ? customPrices[customKey] : formatoBase.precio;
+      
+      precioUnitario = precioComercial;
+      formatoAplicado = formatoBase.formato;
+
+      // Lógica de conversión de necesidades a unidades comerciales
+      if (linea.m2Referencia && formatoBase.unidad.includes("m²")) {
+        // Cerámica (€/m²) -> compramos los m² (o cajas que sumen m²)
+        costeTotal = linea.m2Referencia * precioComercial;
+      } else if (linea.unidad === "litros") {
+        if (materialDef.id === "pintura-plastica") {
+           const bidones = Math.ceil(linea.cantidad / 15);
+           costeTotal = bidones * precioComercial;
+           formatoAplicado = `Bidón 15L (${bidones} uds)`;
+        } else if (materialDef.id === "imprimacion") {
+           const botes = Math.ceil(linea.cantidad / 4);
+           costeTotal = botes * precioComercial;
+           formatoAplicado = `Bote 4L (${botes} uds)`;
+        } else if (materialDef.id === "puente-union") {
+           // 1L ~ 1kg (bote de 1kg).
+           costeTotal = Math.ceil(linea.cantidad) * precioComercial; 
+        } else {
+           costeTotal = Math.ceil(linea.cantidad) * precioComercial;
+        }
+      } else if (linea.unidad === "uds" && materialDef.id === "horquilla-techo") {
+        const cajas = Math.ceil(linea.cantidad / 100);
+        costeTotal = cajas * precioComercial;
+        formatoAplicado = `Caja 100 uds (${cajas} uds)`;
+      } else if (linea.unidad === "uds" || linea.unidad.includes("palets")) {
+        // Ladrillos, varillas (se venden por ud)
+        costeTotal = Math.ceil(linea.cantidad) * precioComercial;
+      } else {
+        // Fallback genérico 1 a 1 (sacos, placas, barras, rollos, etc)
+        costeTotal = Math.ceil(linea.cantidad) * precioComercial;
+      }
+    }
+
+    return {
+      ...linea,
+      precioUnitario,
+      costeTotal,
+      formatoAplicado,
+    };
+  });
 }

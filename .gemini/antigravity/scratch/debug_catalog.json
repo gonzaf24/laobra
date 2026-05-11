@@ -1,0 +1,824 @@
+[
+  {
+    "sku": "10841880",
+    "nombre": "GRAPA ACERO 10x20x10 10841943 PLACA ANCLAJE",
+    "precio": 46.5,
+    "linea": 339
+  },
+  {
+    "sku": "10355464",
+    "nombre": "MORTERO SECO M-7.5 UNIDAD KILO",
+    "precio": 1.89,
+    "linea": 521
+  },
+  {
+    "sku": "10734381",
+    "nombre": "10355464 MORTERO SECO M-7.5 UNIDAD KILO",
+    "precio": 1.89,
+    "linea": 524
+  },
+  {
+    "sku": "10253614",
+    "nombre": "10734381 MORTERO SECO M-7.5 UNIDAD KILO",
+    "precio": 1.89,
+    "linea": 527
+  },
+  {
+    "sku": "10395945",
+    "nombre": "10734381 MORTERO SECO M-7.5 KG UNIDAD KILO",
+    "precio": 1.89,
+    "linea": 529
+  },
+  {
+    "sku": "10734304",
+    "nombre": "10734381 MORTERO SECO M-7.5 25 10395945",
+    "precio": 1.89,
+    "linea": 530
+  },
+  {
+    "sku": "10389610",
+    "nombre": "MORTERO SECO M-7.5 SILICIO UNIDAD KILO",
+    "precio": 2.77,
+    "linea": 541
+  },
+  {
+    "sku": "10734395",
+    "nombre": "MORTERO SECO M-7.5 SILICIO KG UNIDAD KILO",
+    "precio": 2.77,
+    "linea": 544
+  },
+  {
+    "sku": "10355450",
+    "nombre": "MORTERO SECO M-7.5 SILICIO 25 10734395",
+    "precio": 2.77,
+    "linea": 545
+  },
+  {
+    "sku": "25058850",
+    "nombre": "25024171 MORTERO REPARATEC UNIDAD KILO",
+    "precio": 8.76,
+    "linea": 558
+  },
+  {
+    "sku": "25042666",
+    "nombre": "25024171 MORTERO REPARATEC UNIDAD KILO",
+    "precio": 8.76,
+    "linea": 560
+  },
+  {
+    "sku": "10388294",
+    "nombre": "MORTERO CAPAFLOOR MM UNIDAD KILO",
+    "precio": 0.0,
+    "linea": 582
+  },
+  {
+    "sku": "25069052",
+    "nombre": "MORTERO CAPAFLOOR 0-10 10388294",
+    "precio": 15.2,
+    "linea": 583
+  },
+  {
+    "sku": "25034961",
+    "nombre": "MORTERO SIKAFLOOR 100 LEVEL MM UNIDAD KILO",
+    "precio": 15.2,
+    "linea": 588
+  },
+  {
+    "sku": "10974103",
+    "nombre": "MORTERO LEVELPLUS TÉCNICO CEMEX MM UNIDAD KILO",
+    "precio": 15.2,
+    "linea": 593
+  },
+  {
+    "sku": "10260831",
+    "nombre": "MORTERO DE REVOCO WEBEREV FINO UNIDAD KILO",
+    "precio": 7.2,
+    "linea": 612
+  },
+  {
+    "sku": "25035027",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS UNIDAD KILO",
+    "precio": 7.2,
+    "linea": 616
+  },
+  {
+    "sku": "25035052",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS Gris 25035027",
+    "precio": 7.2,
+    "linea": 617
+  },
+  {
+    "sku": "25054254",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS UNIDAD KILO",
+    "precio": 7.2,
+    "linea": 620
+  },
+  {
+    "sku": "25054253",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS Base 25054254",
+    "precio": 7.2,
+    "linea": 621
+  },
+  {
+    "sku": "10546305",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS UNIDAD KILO",
+    "precio": 7.2,
+    "linea": 624
+  },
+  {
+    "sku": "10484964",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS UNIDAD KILO",
+    "precio": 7.42,
+    "linea": 625
+  },
+  {
+    "sku": "10484971",
+    "nombre": "10260831 MORTERO DE REVOCO WEBEREV HIDRO PLUS UNIDAD KILO",
+    "precio": 7.42,
+    "linea": 626
+  },
+  {
+    "sku": "10389463",
+    "nombre": "MORTERO IMPERMEABILIZANTE SIKA MINIPACK UNIDAD KILO",
+    "precio": 10.71,
+    "linea": 652
+  },
+  {
+    "sku": "25058808",
+    "nombre": "MORTERO IMPERMEABILIZANTE SIKA MINIPACK UNIDAD KILO",
+    "precio": 10.71,
+    "linea": 658
+  },
+  {
+    "sku": "25042659",
+    "nombre": "MORTERO IMPERMEABILIZANTE FLEXIBLE WEBERDRY IMPERFLEXGEL UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 4.27,
+    "linea": 677
+  },
+  {
+    "sku": "25105676",
+    "nombre": "MORTERO IMPERMEABILIZANTE FLEXIBLE WEBERDRY IMPERFLEXGEL UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 35.15,
+    "linea": 678
+  },
+  {
+    "sku": "25072124",
+    "nombre": "MORTERO IMPERMEABILIZANTE FLEXIBLE WEBERDRY IMPERFLEXGEL UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 2.48,
+    "linea": 679
+  },
+  {
+    "sku": "25035051",
+    "nombre": "MORTERO RÁPIDO WEBERTEC CRONO UNIDAD KILO",
+    "precio": 0.0,
+    "linea": 699
+  },
+  {
+    "sku": "10438246",
+    "nombre": "MORTERO RÁPIDO CAPACEM UNIDAD KILO",
+    "precio": 20.45,
+    "linea": 704
+  },
+  {
+    "sku": "10300605",
+    "nombre": "10438246 MORTERO INSTANTÁNEO WEBERTEC SUPERCRONO UNIDAD KILO",
+    "precio": 20.45,
+    "linea": 708
+  },
+  {
+    "sku": "10300570",
+    "nombre": "MORTERO REFRACTARIO WEBERTEC FOC UNIDAD KILO",
+    "precio": 20.45,
+    "linea": 713
+  },
+  {
+    "sku": "25045892",
+    "nombre": "MORTERO COLA FIX N200 SACO KILO UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 18.97,
+    "linea": 735
+  },
+  {
+    "sku": "10657766",
+    "nombre": "MORTERO COLA FIX N200 SACO KILO UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 18.03,
+    "linea": 736
+  },
+  {
+    "sku": "10260390",
+    "nombre": "MORTERO COLA FIX N200 SACO KILO UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 12.25,
+    "linea": 737
+  },
+  {
+    "sku": "10447290",
+    "nombre": "MORTERO COLA FIX N200 SACO KILO UNIDAD KILO UNIDAD KILO UNIDAD KILO",
+    "precio": 34.9,
+    "linea": 738
+  },
+  {
+    "sku": "10590153",
+    "nombre": "BOTE LITRO 25l. Aceite para todo tipo de encofrados, evita la adherencia del hormigón o del mortero.",
+    "precio": 6.9,
+    "linea": 1089
+  },
+  {
+    "sku": "10703462",
+    "nombre": "BOTE LITRO 25l. Aceite para todo tipo de encofrados, evita la adherencia del hormigón o del mortero.",
+    "precio": 6.9,
+    "linea": 1090
+  },
+  {
+    "sku": "10703413",
+    "nombre": "BOTE LITRO 25l. Aceite para todo tipo de encofrados, evita la adherencia del hormigón o del mortero.",
+    "precio": 8.55,
+    "linea": 1091
+  },
+  {
+    "sku": "10703441",
+    "nombre": "BOTE LITRO 25l. Aceite para todo tipo de encofrados, evita la adherencia del hormigón o del mortero.",
+    "precio": 8.55,
+    "linea": 1092
+  },
+  {
+    "sku": "10182340",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS Yeso pvc/Metro",
+    "precio": 0.83,
+    "linea": 1290
+  },
+  {
+    "sku": "10345083",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS Yeso pvc/Metro",
+    "precio": 1.22,
+    "linea": 1291
+  },
+  {
+    "sku": "10452512",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS Yeso pvc/Metro",
+    "precio": 1.96,
+    "linea": 1292
+  },
+  {
+    "sku": "10345223",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS Yeso pvc/Metro",
+    "precio": 0.7,
+    "linea": 1293
+  },
+  {
+    "sku": "10345195",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 1.18,
+    "linea": 1294
+  },
+  {
+    "sku": "10345202",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 1.46,
+    "linea": 1295
+  },
+  {
+    "sku": "10345216",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 3.47,
+    "linea": 1296
+  },
+  {
+    "sku": "10446114",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 6.9,
+    "linea": 1298
+  },
+  {
+    "sku": "10301445",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 6.89,
+    "linea": 1299
+  },
+  {
+    "sku": "10324734",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 14.3,
+    "linea": 1300
+  },
+  {
+    "sku": "10720633",
+    "nombre": "ACCESORIOS YESOS Y MORTEROS",
+    "precio": 8.99,
+    "linea": 1301
+  },
+  {
+    "sku": "25096003",
+    "nombre": "10 10764040 LLANA PARA MICROCEMENTO inoxidable y mango de Polipropileno/Elastómero",
+    "precio": 1.07,
+    "linea": 1310
+  },
+  {
+    "sku": "25047485",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 3.35,
+    "linea": 1547
+  },
+  {
+    "sku": "25047484",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 6.65,
+    "linea": 1548
+  },
+  {
+    "sku": "25047486",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 5.12,
+    "linea": 1553
+  },
+  {
+    "sku": "25096149",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 6.4,
+    "linea": 1554
+  },
+  {
+    "sku": "10989923",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 3.76,
+    "linea": 1558
+  },
+  {
+    "sku": "10989930",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 4.7,
+    "linea": 1559
+  },
+  {
+    "sku": "10989951",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 5.64,
+    "linea": 1560
+  },
+  {
+    "sku": "10989965",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 7.52,
+    "linea": 1561
+  },
+  {
+    "sku": "10989986",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 9.4,
+    "linea": 1562
+  },
+  {
+    "sku": "10595214",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 6.65,
+    "linea": 1567
+  },
+  {
+    "sku": "10595221",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 32.68,
+    "linea": 1568
+  },
+  {
+    "sku": "10989993",
+    "nombre": "CM PLACA M2 CM PLACA M2",
+    "precio": 7.73,
+    "linea": 1569
+  },
+  {
+    "sku": "10587150",
+    "nombre": "2,44 ¤ PLACA YESO LAMINADO FK 2700x1200x13 mm/m2 MM M² PLACA M2",
+    "precio": 7.9,
+    "linea": 1617
+  },
+  {
+    "sku": "10632734",
+    "nombre": "2,44 ¤ PLACA YESO LAMINADO FK 2700x1200x13 mm/m2 MM M² PLACA M2",
+    "precio": 10.2,
+    "linea": 1618
+  },
+  {
+    "sku": "10232614",
+    "nombre": "5,15 ¤ PLACA YESO LAMINADO BA 2000x1200x13 mm/m2 MM M² PLACA M2",
+    "precio": 6.18,
+    "linea": 1624
+  },
+  {
+    "sku": "10043033",
+    "nombre": "MM M² PLACA M2 Facil de manejar y transportar",
+    "precio": 7.2,
+    "linea": 1631
+  },
+  {
+    "sku": "10043054",
+    "nombre": "MM M² PLACA M2 Facil de manejar y transportar",
+    "precio": 9.15,
+    "linea": 1632
+  },
+  {
+    "sku": "10452302",
+    "nombre": "MM M² PLACA M2 Facil de manejar y transportar",
+    "precio": 9.36,
+    "linea": 1633
+  },
+  {
+    "sku": "10175312",
+    "nombre": "MM M² PLACA M2 Facil de manejar y transportar",
+    "precio": 10.8,
+    "linea": 1634
+  },
+  {
+    "sku": "10607352",
+    "nombre": "MM M² PLACA M2",
+    "precio": 8.52,
+    "linea": 1635
+  },
+  {
+    "sku": "10886652",
+    "nombre": "MM M² PLACA M2",
+    "precio": 11.92,
+    "linea": 1636
+  },
+  {
+    "sku": "10331972",
+    "nombre": "MM M² PLACA M2",
+    "precio": 10.62,
+    "linea": 1637
+  },
+  {
+    "sku": "10391150",
+    "nombre": "3,86 ¤ PLACA YESO LAMINADO 4PRO 2000x1200x13 mm/m2 MM M² PLACA M2",
+    "precio": 9.27,
+    "linea": 1641
+  },
+  {
+    "sku": "10632762",
+    "nombre": "MM M² PLACA M2 2600x1200x13 mm/m2",
+    "precio": 13.98,
+    "linea": 1647
+  },
+  {
+    "sku": "10632790",
+    "nombre": "MM M² PLACA M2 2600x1200x13 mm/m2",
+    "precio": 13.06,
+    "linea": 1649
+  },
+  {
+    "sku": "10402735",
+    "nombre": "PLACA YESO LAMINADO HIDROFUGADA PPM 2500x1200x13 mm/m2",
+    "precio": 13.06,
+    "linea": 1654
+  },
+  {
+    "sku": "25059042",
+    "nombre": "PLACA YESO LAMINADO HIDROFUGADA PPM 2500x1200x13 mm/m2",
+    "precio": 18.27,
+    "linea": 1655
+  },
+  {
+    "sku": "10650962",
+    "nombre": "PLACA YESO LAMINADO HIDROFUGADA PPM 2500x1200x13 mm/m2",
+    "precio": 15.88,
+    "linea": 1656
+  },
+  {
+    "sku": "10944304",
+    "nombre": "PLACA YESO LAMINADO HIDROFUGADA PPM 2500x1200x13 mm/m2",
+    "precio": 18.25,
+    "linea": 1657
+  },
+  {
+    "sku": "10727612",
+    "nombre": "PLACA YESO LAMINADO PHONIQUE PPH PLACA YESO LAMINADO PHONIQUE PPH",
+    "precio": 15.72,
+    "linea": 1670
+  },
+  {
+    "sku": "10402714",
+    "nombre": "PLACA YESO LAMINADO PHONIQUE PPH Mayor resistencia al fuego y a altas temperaturas",
+    "precio": 16.95,
+    "linea": 1672
+  },
+  {
+    "sku": "10452330",
+    "nombre": "PLACA YESO LAMINADO PHONIQUE PPH Mayor resistencia al fuego y a altas temperaturas",
+    "precio": 20.31,
+    "linea": 1673
+  },
+  {
+    "sku": "25052017",
+    "nombre": "PLACA YESO LAMINADO PHONIQUE PPH Mayor resistencia al fuego y a altas temperaturas",
+    "precio": 22.52,
+    "linea": 1674
+  },
+  {
+    "sku": "10232670",
+    "nombre": "PLACA YESO LAMINADO PHONIQUE PPH 2000x1200x13 mm/m2 MM M² PLACA M",
+    "precio": 14.35,
+    "linea": 1683
+  },
+  {
+    "sku": "25058835",
+    "nombre": "MM M² PLACA M2 MM M² PLACA M2",
+    "precio": 14.35,
+    "linea": 1688
+  },
+  {
+    "sku": "25024034",
+    "nombre": "MM M² PLACA M2 MM M² PLACA M2",
+    "precio": 48.34,
+    "linea": 1691
+  },
+  {
+    "sku": "25069814",
+    "nombre": "PLACA M2 2600x1200x8mm. Placa compuesta por Sal de Epsom reforzada por doble malla de fibra de vidrio. Indicada revestimientos donde se requiera un excelente comportamiento mecánico, a la humedad y al fuego.",
+    "precio": 26.28,
+    "linea": 1698
+  },
+  {
+    "sku": "25069812",
+    "nombre": "PANEL M2 2600x1200x8+14mm. Placa compuesta de Sal de Epsom. Reforzada por doble malla de Fibra de Vidrio y 14mm de XPS. Indicada principalmente para cerramientos en fachadas o zonas donde se requiera un sistema de aislamiento con placa de excelente resitencia a la humedad y al fuego.",
+    "precio": 45.51,
+    "linea": 1704
+  },
+  {
+    "sku": "25069815",
+    "nombre": "PANEL M2 2600x1200x8+20+8mm. Panel compuesto por placa de sal de Epsom reforzada por doble malla de Fibra de Vidrio en ambas caras y un interior entre placas de 20mm de XPS. Indicado para forjados y cubiertas con apoyos sobre vigas o correas. Solución en suelos secos.",
+    "precio": 16.5,
+    "linea": 1709
+  },
+  {
+    "sku": "25071447",
+    "nombre": "31 25071459 SOPORTE METÁLICO DE CARGA Elemento metálico que se sitúa entre montantes para la fijación de cargas de hasta 40kg en tabiques de yeso laminado o de cemento.",
+    "precio": 5.34,
+    "linea": 1765
+  },
+  {
+    "sku": "10701782",
+    "nombre": "SACO KILO secado: 24 horas. Destinada a nivelar, cubrir y renovar paramentos interiores sobre yesos, escayolas, cementos, placas de yeso laminado, piedra, pintura en base acrílica y ladrillo. Renovación de paramentos rugosos que exijan espesores 5mm. Su embalaje facilita su uso al llevar asa. (1)",
+    "precio": 9.7,
+    "linea": 1930
+  },
+  {
+    "sku": "10232705",
+    "nombre": "SACO KILO secado: 24 horas. Destinada a nivelar, cubrir y renovar paramentos interiores sobre yesos, escayolas, cementos, placas de yeso laminado, piedra, pintura en base acrílica y ladrillo. Renovación de paramentos rugosos que exijan espesores 5mm. Su embalaje facilita su uso al llevar asa. (1)",
+    "precio": 10.5,
+    "linea": 1931
+  },
+  {
+    "sku": "10624103",
+    "nombre": "SACO KILO secado: 24 horas. Destinada a nivelar, cubrir y renovar paramentos interiores sobre yesos, escayolas, cementos, placas de yeso laminado, piedra, pintura en base acrílica y ladrillo. Renovación de paramentos rugosos que exijan espesores 5mm. Su embalaje facilita su uso al llevar asa. (1)",
+    "precio": 0.87,
+    "linea": 1932
+  },
+  {
+    "sku": "10624110",
+    "nombre": "SACO KILO secado: 24 horas. Destinada a nivelar, cubrir y renovar paramentos interiores sobre yesos, escayolas, cementos, placas de yeso laminado, piedra, pintura en base acrílica y ladrillo. Renovación de paramentos rugosos que exijan espesores 5mm. Su embalaje facilita su uso al llevar asa. (1)",
+    "precio": 0.53,
+    "linea": 1933
+  },
+  {
+    "sku": "10894436",
+    "nombre": "PLACA M2 100x60cm. 0.6m². Espesor: 2cm.",
+    "precio": 1.65,
+    "linea": 1969
+  },
+  {
+    "sku": "10974355",
+    "nombre": "10546893 SOPORTE BALANCÍN REGULABLE Acero galvanizado. 10974306 CLIP SUJECIÓN PLACAS",
+    "precio": 0.33,
+    "linea": 2032
+  },
+  {
+    "sku": "10974082",
+    "nombre": "10546893 SOPORTE BALANCÍN REGULABLE Elemento de fijación de las placas de techos desmontables a los perfiles primarios y secundarios, para evitar que se muevan por corrientes de aire y otros factores. 10974355(1)",
+    "precio": 0.33,
+    "linea": 2035
+  },
+  {
+    "sku": "10974250",
+    "nombre": "10546893 SOPORTE BALANCÍN REGULABLE Elemento de fijación de las placas de techos desmontables a los perfiles primarios y secundarios, para evitar que se muevan por corrientes de aire y otros factores. 10974355(1)",
+    "precio": 0.5,
+    "linea": 2037
+  },
+  {
+    "sku": "10893855",
+    "nombre": "PAQUETE M2 PLACA TECHO ACABADO FISURADO",
+    "precio": 2.88,
+    "linea": 2158
+  },
+  {
+    "sku": "25047049",
+    "nombre": "PAQUETE M2 Adecuado para lugares de uso deportivo, aulas, restaurantes, hospitales, etc. 12 placas/paquete.",
+    "precio": 4.32,
+    "linea": 2175
+  },
+  {
+    "sku": "25047018",
+    "nombre": "PAQUETE M2 Adecuado para lugares de uso deportivo, aulas, restaurantes, hospitales, etc. 12 placas/paquete.",
+    "precio": 0.36,
+    "linea": 2179
+  },
+  {
+    "sku": "25119950",
+    "nombre": "25047018 PLACA TECHO ACÚSTICO NOVA Diseñado para ser instalado con perfilería T-15 y T-24.",
+    "precio": 3.49,
+    "linea": 2183
+  },
+  {
+    "sku": "10987760",
+    "nombre": "PLACA M2 Adecuado para lugares con exigencias térmicas y acústicas, como aulas, salas de reuniones, gimnasios, piscinas, etc.",
+    "precio": 2.28,
+    "linea": 2199
+  },
+  {
+    "sku": "10987781",
+    "nombre": "PLACA M2 Adecuado para lugares con exigencias térmicas y acústicas, como aulas, salas de reuniones, gimnasios, piscinas, etc.",
+    "precio": 5.35,
+    "linea": 2200
+  },
+  {
+    "sku": "10393215",
+    "nombre": "PLACA M2 Adecuado para lugares con exigencias térmicas y acústicas, como aulas, salas de reuniones, gimnasios, piscinas, etc.",
+    "precio": 5.94,
+    "linea": 2201
+  },
+  {
+    "sku": "25071494",
+    "nombre": "25051076 BALDOSA AISLANTE TEXLOSA 60x60cm. Espesor 40/35mm. Baldosa aislante compuesta de poliestireno extruido y capa superior mortero 35mm. Especial drenaje.",
+    "precio": 7.92,
+    "linea": 2362
+  },
+  {
+    "sku": "10769031",
+    "nombre": "ROLLO M2 de espacios exterioresy cubiertas planas transitables y no transitables, como terrazas, azoteas, balcones y patios. Admite unión y sellado con cemento cola C2 en interiores, masilla selladora tipo MS o SEAL PLUS también por airre caliente.",
+    "precio": 0.18,
+    "linea": 2565
+  },
+  {
+    "sku": "25058096",
+    "nombre": "6,20 ¤ PLACA BAJO TEJA MINIONDA",
+    "precio": 2.11,
+    "linea": 2696
+  },
+  {
+    "sku": "25058095",
+    "nombre": "PLACA BAJO TEJA MEDITERRÁNEO PLACA BAJO TEJA MEDITERRÁNEO",
+    "precio": 1.9,
+    "linea": 2700
+  },
+  {
+    "sku": "25058097",
+    "nombre": "PLACA BITUMINOSA PLACA BITUMINOSA",
+    "precio": 11.44,
+    "linea": 2704
+  },
+  {
+    "sku": "25036261",
+    "nombre": "PLACA BITUMINOSA UNIDAD METRO",
+    "precio": 11.44,
+    "linea": 2707
+  },
+  {
+    "sku": "25052214",
+    "nombre": "PLACA M2 PLACA MINIONDA GALVANIZADA",
+    "precio": 21.5,
+    "linea": 2792
+  },
+  {
+    "sku": "25087043",
+    "nombre": "ROJO PLACA M2 ROJO PLACA M2",
+    "precio": 0.0,
+    "linea": 2797
+  },
+  {
+    "sku": "25087046",
+    "nombre": "ROJO PLACA M2 2,2m2 2x1,1m 25087043 22€ 10€",
+    "precio": 0.0,
+    "linea": 2798
+  },
+  {
+    "sku": "25087044",
+    "nombre": "ROJO / BLANCO PLACA M2 Mejora confort termico y acústico",
+    "precio": 0.0,
+    "linea": 2803
+  },
+  {
+    "sku": "25087041",
+    "nombre": "ROJO / BLANCO PLACA M2 3,5m2 3,5x1m 25087044 105€ 30€",
+    "precio": 0.0,
+    "linea": 2804
+  },
+  {
+    "sku": "25087042",
+    "nombre": "ROJO / BLANCO PLACA M2 4,9m2 4,9x1m 25087041 147€ 30€",
+    "precio": 0.0,
+    "linea": 2805
+  },
+  {
+    "sku": "25087038",
+    "nombre": "ROJO / BLANCO PLACA M2 ROJO / BLANCO PLACA M2",
+    "precio": 0.0,
+    "linea": 2810
+  },
+  {
+    "sku": "25087047",
+    "nombre": "ROJO / BLANCO PLACA M2 3m2 3x1m 25087038 63€ 21€",
+    "precio": 0.0,
+    "linea": 2811
+  },
+  {
+    "sku": "25087040",
+    "nombre": "PLACA M2 3x1m 30mm espesor. Material: acero prelacado. Color blanco. Para fachadas.",
+    "precio": 7.5,
+    "linea": 2819
+  },
+  {
+    "sku": "10050552",
+    "nombre": "PLACA M2 PLACA M2 PLACA TEJA ICOPPO",
+    "precio": 25.13,
+    "linea": 2864
+  },
+  {
+    "sku": "10050553",
+    "nombre": "PLACA M2 Terracota 10050552",
+    "precio": 25.13,
+    "linea": 2865
+  },
+  {
+    "sku": "25035505",
+    "nombre": "PLACA M2 Terracota envejecida 10050553",
+    "precio": 15.35,
+    "linea": 2868
+  },
+  {
+    "sku": "10035521",
+    "nombre": "PLACA M2 Terracota envejecida 10050553",
+    "precio": 15.45,
+    "linea": 2869
+  },
+  {
+    "sku": "10770676",
+    "nombre": "10463131 PLACA SANDWICH DE MADERA MM UNIDAD M2",
+    "precio": 44.18,
+    "linea": 3275
+  },
+  {
+    "sku": "10426591",
+    "nombre": "10463131 PLACA SANDWICH DE MADERA MM UNIDAD M2",
+    "precio": 50.87,
+    "linea": 3276
+  },
+  {
+    "sku": "25096557",
+    "nombre": "Calacata Mate 25096556 Cemento 25096558",
+    "precio": 69.42,
+    "linea": 5654
+  },
+  {
+    "sku": "10836630",
+    "nombre": "MADERA MACIZA ROBLE Granito 10239404 Cemento 10991890",
+    "precio": 4.48,
+    "linea": 6038
+  },
+  {
+    "sku": "10904054",
+    "nombre": "PLACA DE GAS 4 FUEGOS Independiente. 4 fuegos. Para gas butano. kit",
+    "precio": 0.0,
+    "linea": 6462
+  },
+  {
+    "sku": "10922534",
+    "nombre": "PLACA DE GAS 4 FUEGOS 4 fuegos. Para gas butano. kit gas natural",
+    "precio": 0.0,
+    "linea": 6464
+  },
+  {
+    "sku": "25031742",
+    "nombre": "PLACA VITROCERÁMICA 2 ZONAS Modular. 2 zonas radiantes. 9 niveles de",
+    "precio": 0.0,
+    "linea": 6469
+  },
+  {
+    "sku": "10726240",
+    "nombre": "PLACA VITROCERÁMICA 2 ZONAS Independiente. Touch control. 4 zonas",
+    "precio": 0.0,
+    "linea": 6471
+  },
+  {
+    "sku": "10403372",
+    "nombre": "PLACA VITROCERÁMICA 2 ZONAS Independiente. Touch control. 4 zonas radiantes y 9 niveles",
+    "precio": 0.0,
+    "linea": 6473
+  },
+  {
+    "sku": "10599022",
+    "nombre": "PLACA VITROCERÁMICA 3 ZONAS Independiente. Touch control. 3 zonas radiantes y 9 niveles de potencia. Indicador de calor residual. Botón temporizador.",
+    "precio": 0.0,
+    "linea": 6476
+  },
+  {
+    "sku": "25029168",
+    "nombre": "HORNO ESTÁTICO ACABADO BLANCO Capacidad de 74 L. 25102555 PLACA INDUCCIÓN 3 ZONAS",
+    "precio": 0.0,
+    "linea": 6480
+  }
+]

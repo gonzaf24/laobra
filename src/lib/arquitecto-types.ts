@@ -119,6 +119,15 @@ export interface EstanciaObra {
   notas: string;
 }
 
+export interface PlanoObra {
+  id: string;
+  titulo: string;
+  categoria: "arquitectura" | "instalaciones" | "detalles" | "otros";
+  url: string;
+  version: string;
+  fecha: string;
+}
+
 // ── Obra Completa ──
 export interface Obra {
   id: string;
@@ -127,6 +136,7 @@ export interface Obra {
   createdAt: string;
   updatedAt: string;
   estancias: EstanciaObra[];
+  planos?: PlanoObra[];
 }
 
 // ─────────────────────────────────────────────────

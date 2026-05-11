@@ -1,0 +1,219 @@
+[
+  {
+    "sku": "25077118",
+    "nombre": "Mortero Seco M-7,5 (Sierra semi circular para mortero)",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25077118",
+    "nombre": "Mortero Seco M-5 (Sierra semi circular para mortero)",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10069548",
+    "nombre": "Placa Pladur Blanca (BO3711. 22.000o.p.m. Velocidad variable. Tamaño del abrasivo: 93x230mm. Velocidad en vacío 11.000r.p.m. Conectable a un aspirador. Incluye hoja abrasiva, cajón recoge polvo y placa perforadora. \")",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25111563",
+    "nombre": "Placa Pladur Blanca Alt (Capacidad 14.5l. Material placa de acero. 2 Asas metálicas, apertura en abanico, un cajón inferior y una altura de cajones con divisores. Medidas: 41.5x23x20cm. Modelo 6900-400.)",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10974355",
+    "nombre": "Placa Pladur Blanca Alt (Elemento de fijación de las placas de techos desmontables a los perfiles primarios y secundarios, para evitar que se muevan por corrientes de aire y otros factores. (1)\")",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10474184",
+    "nombre": "Ladrillo Hueco Doble (Impermeabilizante ecológico para la protección hidrófuga de superficies exteriores de barro, ladrillo cara vista, gres extrusionado, piedra natural no pulida, piedra artificial y derivados de cemento. Defiende el material contra los daños de los agentes atmosféricos. (1)\")",
+    "categoriaId": "materiales",
+    "precio": 9.25,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10570133",
+    "nombre": "Ladrillo Hueco Doble Alt (natural no pulida, gres extrusionado, barro natural, ladrillo cara vista, piedra artificial, cemento y mosaico hidráulico) contra la penetración en profundidad de manchas orgánicas, sin alterar el aspecto estético. Uso interior/exterior. (1)\")",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10570126",
+    "nombre": "Ladrillo Hueco Doble Alt ((piedra con acabado rústico, barro natural, ladrillo cara vista, piedra artificial) contra la penetración en profundidad de manchas orgánicas, proporcionando un agradable efecto mojado. \")",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10674573",
+    "nombre": "Pintura Plástica Blanca (Caudal ajustable 0 a 500ml/min. Tipos de pintura: estandards sin diluicion. Capacidad del deposito 1300/800ml. Potencia de pulverizacion 25-200W. Chorro de pintura regulable en 2 niveles para proyeccion vertical y horizontal. Accesorios suministrados: maletin, boquilla spray metal y madera. Peso 1.9Kg \")",
+    "categoriaId": "pintura",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10674545",
+    "nombre": "Pintura Plástica Blanca Alt (Caudal ajustable 0 a 230ml/min. Tipos de pintura: plasticas. Capacidad del depósito 1300ml. Potencia de pulverizacion 110W. Accesorios suministrados: boquilla I-Spray, manguera 1,8m. Peso 2Kg \")",
+    "categoriaId": "pintura",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10474156",
+    "nombre": "Pintura Plástica Blanca Alt (no pulida, piedra artificial y derivados de cemento. Elimina manchas orgánicas, marcas de rotulador y gotas de pintura plástica en gres, cerámica y Porcelánico.)",
+    "categoriaId": "pintura",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25056314",
+    "nombre": "Yeso Manual (Uso: universal para rieles y varillas metálicas, para tabiques de cartón- yeso, fijación por punzonado. \")",
+    "categoriaId": "materiales",
+    "precio": 9.41,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10550442",
+    "nombre": "Canal 48 (Alimentación 220V 50Hz, Longitud máxima por hoja 2m, Peso máximo por hoja 150 kg, Apertura máxima 110º, Alcance mando 100 metros en campo abierto, Parada en caso de obstáculo, desbloqueo manual del motor. Contenido: 1 Motor para puerta batiente 24Vdc, 1 Cuadro maniobra con receptor incorporado, 2 emisores cuatricanales de 433,92MHz, 1 juego fotocélulas)",
+    "categoriaId": "materiales",
+    "precio": 433.92,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25080610",
+    "nombre": "Canal 48 Alt (2 canales \")",
+    "categoriaId": "materiales",
+    "precio": 6.5,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10593863",
+    "nombre": "Canal 48 Alt (basculante de muelles con cuadro de maniobras y receptor incorporado, 2 emisores cuatricanales rolling code, 3,3 metros de guía con cadena incluida, 1 juego separadores de la guía del techo)",
+    "categoriaId": "materiales",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25077841",
+    "nombre": "Inodoro Pack WC (Pack WC en porcelana blanca. \")",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25113851",
+    "nombre": "Inodoro Pack WC Alt (Pack WC en porcelana blanca. \")",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25023850",
+    "nombre": "Inodoro Pack WC Alt (Pack Wc en porcelana blanca. \")",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10459596",
+    "nombre": "Grifo Lavabo (\"Membrana 50 GPD. Depósito presurizado de 11 l. Incluye postfiltro remineralizador, grifo y accesorios de montaje.Sin bomba. (1))",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10531766",
+    "nombre": "Grifo Lavabo Alt (presurizado de 16 l. Incluye postfiltro remineralizador, grifo y accesorios de montaje. Con bomba. (1))",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25107779",
+    "nombre": "Grifo Lavabo Alt (Caño giratorio para grifo de pedal. \")",
+    "categoriaId": "banos",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25078573",
+    "nombre": "Encimera Cocina (50x33x50cm. Mueble en MDF 19mm. Color blanco. Con 1 puerta. Espejo 3mm espesor y encimera en porcelana blanca. (11)\")",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25078572",
+    "nombre": "Encimera Cocina Alt (50x33x50cm. Mueble en MDF 19mm. Color verde. Con 1 puerta. Espejo 3mm espesor y encimera en porcelana blanca. (11)\")",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25061839",
+    "nombre": "Encimera Cocina Alt (50x33x80cm. Mueble en melamina 16mm. Con 1 puerta. Espejo 3mm espesor y encimera en porcelana blanca. (11)\")",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25046406",
+    "nombre": "Fregadero (fregaderos obstruidos. (64)\")",
+    "categoriaId": "cocinas",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "10701894",
+    "nombre": "Cable Eléctrico 1,5mm (190mm. Para entallar terminales Western de 6 y 8 polos tipo RJ 11/12 (ancho 9,65 mm) y RJ 45 (ancho 11,68 mm). Guillotina y cuchilla pelacables para cables planos de 6 y 12 mm de longitud. Con dispositivo adicional para pelar cables redondos.)",
+    "categoriaId": "electricidad",
+    "precio": 9.65,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25056315",
+    "nombre": "Cable Eléctrico 1,5mm Alt (autoajustable que se utiliza para terminales de cable de 0,25 a 10mm2 \")",
+    "categoriaId": "electricidad",
+    "precio": 0.25,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10381686",
+    "nombre": "Cable Eléctrico 1,5mm Alt (4 tomas. Sin cable. \")",
+    "categoriaId": "electricidad",
+    "precio": 9.4,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "25055557",
+    "nombre": "Tubo PVC 110 (Tamaño del abrasivo: 225mm. Posibilidad de conectar un aspirador externo. Motor en posición vertical. Fijación del abrasivo: Velcro. 2,5Kg. Incluye: Set de 6 lijas, tubo de aspiración, adaptador para aspirador y bolsa recoge polvo.)",
+    "categoriaId": "fontaneria",
+    "precio": 0.0,
+    "tipo": "estandar"
+  },
+  {
+    "sku": "25056120",
+    "nombre": "Tubo PVC 110 Alt (\"DCS369N. Brushless. 0-2.800c.p.m. No incluye cargador ni baterías. Capacidad máxima de corte en madera 200mm. Capacidad máxima de corte en tubo 100mm. Luz LED. Empuñadura ergonómica y engomada. No incluye cargador ni baterías.)",
+    "categoriaId": "fontaneria",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  },
+  {
+    "sku": "10950891",
+    "nombre": "Tubo PVC 110 Alt (. Longitud de cable 2m. Potencia de succión: 19Kpa. Accesorios incluidos: Tubo de aspiración flexible, boquilla de aluminio y filtro HEPA. (1)\")",
+    "categoriaId": "fontaneria",
+    "precio": 0.0,
+    "tipo": "frecuente"
+  }
+]

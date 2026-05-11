@@ -22,13 +22,19 @@ export function getObras(): Obra[] {
     
     // Migración transparente para multi-secciones
     return obras.map((obra) => {
+      if (!obra.planos) obra.planos = [];
       if (obra.estancias) {
         obra.estancias = obra.estancias.map((est) => {
-          if (!Array.isArray(est.suelo)) est.suelo = (est.suelo as any)?.habilitado ? [est.suelo] : [];
-          if (!Array.isArray(est.paredes)) est.paredes = (est.paredes as any)?.habilitado ? [est.paredes] : [];
-          if (!Array.isArray(est.alicatado)) est.alicatado = (est.alicatado as any)?.habilitado ? [est.alicatado] : [];
-          if (!Array.isArray(est.techo)) est.techo = (est.techo as any)?.habilitado ? [est.techo] : [];
-          if (!Array.isArray(est.pintura)) est.pintura = (est.pintura as any)?.habilitado ? [est.pintura] : [];
+          if (!Array.isArray(est.suelo))
+            est.suelo = (est.suelo as any)?.habilitado ? [est.suelo] : [];
+          if (!Array.isArray(est.paredes))
+            est.paredes = (est.paredes as any)?.habilitado ? [est.paredes] : [];
+          if (!Array.isArray(est.alicatado))
+            est.alicatado = (est.alicatado as any)?.habilitado ? [est.alicatado] : [];
+          if (!Array.isArray(est.techo))
+            est.techo = (est.techo as any)?.habilitado ? [est.techo] : [];
+          if (!Array.isArray(est.pintura))
+            est.pintura = (est.pintura as any)?.habilitado ? [est.pintura] : [];
           return est;
         });
       }
