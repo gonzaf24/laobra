@@ -16,6 +16,7 @@ export interface Leccion {
   title: string;
   description: string;
   duration?: string;
+  videoUrl?: string;
 }
 
 export interface FormacionGremio {
@@ -51,10 +52,36 @@ export const FORMACIONES_DATA: FormacionGremio[] = [
     color: "text-blue-400",
     bgGradient: "from-blue-500/10 to-slate-900/40",
     lecciones: [
-      { id: "yp-1", title: "Estructura Metálica: Canales y Montantes", description: "Instalación del esqueleto del tabique." },
-      { id: "yp-2", title: "Corte y Atornillado de Placas", description: "Técnicas de corte limpio y fijación." },
-      { id: "yp-3", title: "Tratamiento de Juntas (Pastas)", description: "Encintado y acabado para pintura." },
-      { id: "yp-4", title: "Aislamiento Acústico y Térmico", description: "Colocación de lana de roca y otros materiales." }
+      { 
+        id: "yp-1", 
+        title: "Estructura Metálica: Canales y Montantes", 
+        description: "Instalación del esqueleto del tabique paso a paso.",
+        videoUrl: "https://www.youtube.com/watch?v=kbM_i-JY-Ug" 
+      },
+      { 
+        id: "yp-2", 
+        title: "Corte y Atornillado de Placas", 
+        description: "Técnicas de corte limpio y fijación de placas de yeso laminado.",
+        videoUrl: "https://www.youtube.com/watch?v=VmVC6Woq8MQ" 
+      },
+      { 
+        id: "yp-3", 
+        title: "Tratamiento de Juntas (Pastas)", 
+        description: "Encintado y acabado profesional para dejar la pared lista para pintura.",
+        videoUrl: "https://www.youtube.com/watch?v=Wxx1ORLMzac" 
+      },
+      { 
+        id: "yp-4", 
+        title: "Aislamiento Acústico y Térmico", 
+        description: "Colocación de lana de roca y sellado de puentes térmicos.",
+        videoUrl: "https://www.youtube.com/watch?v=LjtlcPEUDDE" 
+      },
+      {
+        id: "yp-5",
+        title: "Techos Falsos: Instalación y Nivelación",
+        description: "Cómo montar la estructura de techo y nivelarla perfectamente.",
+        videoUrl: "https://www.youtube.com/watch?v=wnLbLx-2xTU"
+      }
     ]
   },
   {
