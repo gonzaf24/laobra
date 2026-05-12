@@ -38,10 +38,42 @@ export const FORMACIONES_DATA: FormacionGremio[] = [
     color: "text-orange-400",
     bgGradient: "from-orange-500/10 to-slate-900/40",
     lecciones: [
-      { id: "cl-1", title: "Tipos de Ladrillo y sus Usos", description: "Ladrillo hueco, macizo y tabicón." },
-      { id: "cl-2", title: "Preparación del Mortero de Agarre", description: "Consistencia ideal para levantar muros." },
-      { id: "cl-3", title: "Nivelación y Plomado de Paredes", description: "Uso de la plomada y el nivel de burbuja." },
-      { id: "cl-4", title: "Replanteo de la Primera Hilada", description: "La importancia de empezar recto." }
+      { 
+        id: "cl-1", 
+        title: "Tipos de Ladrillo y sus Usos", 
+        description: "Ladrillo hueco vs común: diferencias, resistencia y cuándo elegir cada uno.",
+        videoUrl: "https://www.youtube.com/watch?v=j-kh5yiskFQ"
+      },
+      { 
+        id: "cl-5", 
+        title: "Nivelación de Suelos y Maestreo", 
+        description: "Cómo hacer pendientes y nivelar suelos con mortero paso a paso.",
+        videoUrl: "https://www.youtube.com/watch?v=FyMhNcg0Jvo" 
+      },
+      {
+        id: "cl-6",
+        title: "Losa de Cimentación y Saneamiento",
+        description: "Preparación de terreno, hierro y vertido de hormigón con tuberías de desagüe.",
+        videoUrl: "https://www.youtube.com/watch?v=6QjAacJN5hI"
+      },
+      {
+        id: "cl-7",
+        title: "Alicatado Profesional: Baños y Cocinas",
+        description: "Técnicas de pegado, cortes y nivelación de azulejos en paredes.",
+        videoUrl: "https://www.youtube.com/watch?v=tsw-_Vp-5Zc"
+      },
+      {
+        id: "cl-8",
+        title: "Detalles de Alicatado en Baños",
+        description: "Trucos y detalles específicos para alicatar zonas difíciles y esquinas.",
+        videoUrl: "https://www.youtube.com/watch?v=Wg4cXxt-iKY"
+      },
+      {
+        id: "cl-9",
+        title: "Enlucido Monocapa y Malla",
+        description: "Aplicación de mortero monocapa, colocación de malla de refuerzo y acabado raspado o fratasado.",
+        videoUrl: "https://www.youtube.com/watch?v=LfNqMyJWvaw"
+      }
     ]
   },
   {
@@ -92,9 +124,30 @@ export const FORMACIONES_DATA: FormacionGremio[] = [
     color: "text-emerald-400",
     bgGradient: "from-emerald-500/10 to-slate-900/40",
     lecciones: [
-      { id: "mp-1", title: "El Ratio de Mezcla Universal", description: "Proporciones según el tipo de trabajo." },
-      { id: "mp-2", title: "Aditivos: Hidrófugos y Acelerantes", description: "Cuándo y cómo usarlos correctamente." },
-      { id: "mp-3", title: "Uso de la Hormigonera vs Mezclado Manual", description: "Eficiencia y tiempos de batido." }
+      {
+        id: "mp-4",
+        title: "Morteros Autonivelantes de Bajo Espesor",
+        description: "Preparación de la mezcla y técnica de vertido para conseguir suelos perfectos.",
+        videoUrl: "https://www.youtube.com/watch?v=HMQL8h_FsaQ"
+      },
+      {
+        id: "mp-5",
+        title: "Mortero Autonivelante para Suelo Radiante",
+        description: "Aplicación técnica sobre sistemas de calefacción por suelo radiante.",
+        videoUrl: "https://www.youtube.com/watch?v=tRepwclqDsg"
+      },
+      {
+        id: "mp-6",
+        title: "Guía de Cementos Cola",
+        description: "Tipos de adhesivos (C1, C2, T, E, S1) y cuál elegir según el soporte y la pieza.",
+        videoUrl: "https://www.youtube.com/watch?v=q8sxsZ_Fr_Y"
+      },
+      {
+        id: "mp-7",
+        title: "Morteros Técnicos Especiales",
+        description: "Morteros de reparación r4, impermeabilizantes, anclajes y cosmética de hormigón.",
+        videoUrl: "https://www.youtube.com/watch?v=3S8QiupAwK8"
+      }
     ]
   },
   {
@@ -105,10 +158,30 @@ export const FORMACIONES_DATA: FormacionGremio[] = [
     color: "text-cyan-400",
     bgGradient: "from-cyan-500/10 to-slate-900/40",
     lecciones: [
-      { id: "as-1", title: "Doble Encolado: Por qué es Vital", description: "Asegurando que no queden huecos bajo la pieza." },
-      { id: "as-2", title: "Sistemas de Nivelación (Cuñas)", description: "Evitar cejas en formatos grandes." },
-      { id: "as-3", title: "Cortes de Precisión y Esquinas", description: "Uso de la cortadora manual y eléctrica." },
-      { id: "as-4", title: "Rejuntado y Limpieza Final", description: "Aplicación del mortero para juntas y acabado impecable." }
+      { 
+        id: "as-2", 
+        title: "Sistemas de Nivelación (Cuñas)", 
+        description: "Uso de calzos y cuñas para evitar cejas en porcelánicos imitación madera.",
+        videoUrl: "https://www.youtube.com/watch?v=C5B9ql7wTcY"
+      },
+      { 
+        id: "as-3", 
+        title: "Cortes de Precisión y Esquinas", 
+        description: "Uso de la cortadora manual para conseguir cortes rectos e impecables.",
+        videoUrl: "https://www.youtube.com/watch?v=2wV7VlFOTPg"
+      },
+      {
+        id: "as-5",
+        title: "Técnicas para Gran Formato",
+        description: "Manipulación, doble encolado y colocación de piezas porcelánicas de gran tamaño.",
+        videoUrl: "https://www.youtube.com/watch?v=ETJckYYAu6Y"
+      },
+      {
+        id: "as-6",
+        title: "Gran Formato en Baños: Alicatado Vertical",
+        description: "Técnicas de corte, pegado y manipulación de piezas grandes en paredes de baño.",
+        videoUrl: "https://www.youtube.com/watch?v=qQYrx3E_yHg"
+      }
     ]
   },
   {
@@ -119,61 +192,46 @@ export const FORMACIONES_DATA: FormacionGremio[] = [
     color: "text-purple-400",
     bgGradient: "from-purple-500/10 to-slate-900/40",
     lecciones: [
-      { id: "mr-1", title: "Uso del Nivel Láser de 360º", description: "Marcar el nivel de 1 metro en toda la planta." },
-      { id: "mr-2", title: "Cálculo de Áreas y Desperdicios", description: "Cuánto material pedir para no quedarse corto." },
-      { id: "mr-3", title: "Replanteo en Suelos con Ángulos", description: "Cómo empezar para que los cortes queden ocultos." }
+      { 
+        id: "mr-1", 
+        title: "Uso del Nivel Láser de 360º", 
+        description: "Marcar el nivel de 1 metro en toda la planta y alineaciones perfectas.",
+        videoUrl: "https://www.youtube.com/watch?v=J_8L__a-cOA"
+      },
+      {
+        id: "mr-4",
+        title: "Práctica Real con Nivel Autonivelante",
+        description: "7 ejemplos de uso en obra: desde techos hasta alineación de muebles.",
+        videoUrl: "https://www.youtube.com/watch?v=lIDUQLdQB1Q"
+      }
     ]
   },
   {
-    id: "logistica-limpieza",
-    name: "Logística y Limpieza",
-    description: "Zonas comunes, escombros y protección de acabados.",
-    icon: Truck,
-    color: "text-slate-400",
-    bgGradient: "from-slate-500/10 to-slate-900/40",
+    id: "fontaneria-saneamiento",
+    name: "Fontanería y Saneamiento",
+    description: "Instalación de tuberías, sanitarios y sistemas de desagüe.",
+    icon: Droplets,
+    color: "text-blue-500",
+    bgGradient: "from-blue-600/10 to-slate-900/40",
     lecciones: [
-      { id: "ll-1", title: "Protección de Suelos y Ascensores", description: "Materiales para evitar daños en zonas comunes." },
-      { id: "ll-2", title: "Organización de Material en Obra", description: "Dónde colocar cada cosa para no trabajar el doble." },
-      { id: "ll-3", title: "Gestión de Residuos y Sacos", description: "Normativa y eficiencia en el desescombro." }
-    ]
-  },
-  {
-    id: "demolicion-desescombro",
-    name: "Demolición y Desescombro",
-    description: "Tirar tabiques, quitar azulejos y gestión de residuos.",
-    icon: Hammer,
-    color: "text-red-400",
-    bgGradient: "from-red-500/10 to-slate-900/40",
-    lecciones: [
-      { id: "dd-1", title: "Seguridad: Apuntalado y Cargas", description: "Identificar muros de carga antes de tirar nada." },
-      { id: "dd-2", title: "Herramientas de Demolición", description: "Martillos eléctricos vs maza manual." },
-      { id: "dd-3", title: "Retirada Selectiva de Materiales", description: "Separar madera, metal y escombro limpio." }
-    ]
-  },
-  {
-    id: "instalaciones-albañil",
-    name: "Instalaciones (Albañil)",
-    description: "Rozas, cajas de luz y pre-instalaciones de agua.",
-    icon: Zap,
-    color: "text-amber-400",
-    bgGradient: "from-amber-500/10 to-slate-900/40",
-    lecciones: [
-      { id: "ia-1", title: "Hacer Rozas sin Debilitar Muros", description: "Trayectorias horizontales y verticales permitidas." },
-      { id: "ia-2", title: "Recibido de Cajas y Tubos", description: "Uso de yeso rápido o mortero según zona." },
-      { id: "ia-3", title: "Pasamuros y Sellado Técnico", description: "Evitar puentes térmicos y ruidos entre habitaciones." }
-    ]
-  },
-  {
-    id: "estandar-cotas",
-    name: "Medidas Estándar y Cotas",
-    description: "Alturas de enchufes, tomas de agua y desagües.",
-    icon: Wrench,
-    color: "text-indigo-400",
-    bgGradient: "from-indigo-500/10 to-slate-900/40",
-    lecciones: [
-      { id: "ec-1", title: "Alturas Estándar en Baño y Cocina", description: "Dónde poner las tomas para que coincidan con los muebles." },
-      { id: "ec-2", title: "Cotas de Mecanismos Eléctricos", description: "Alturas de interruptores, enchufes y tomas de TV." },
-      { id: "ec-3", title: "Pendientes en Desagües de Ducha", description: "El mínimo necesario para que el agua no se estanque." }
+      {
+        id: "fs-1",
+        title: "Instalación de Sanitarios: El Inodoro",
+        description: "Montaje paso a paso de un WC, fijación al suelo y conexión de cisterna.",
+        videoUrl: "https://www.youtube.com/watch?v=qswMPk1k1m8"
+      },
+      {
+        id: "fs-2",
+        title: "Cambio de Bañera por Plato de Ducha",
+        description: "Retirada de bañera, movimiento de desagüe e impermeabilización crítica del plato.",
+        videoUrl: "https://www.youtube.com/watch?v=MmxomD5bFws"
+      },
+      {
+        id: "fs-3",
+        title: "Plato de Ducha de Obra y Piedra",
+        description: "Creación de pendientes, instalación de sumidero sifónico y acabado con malla de piedras.",
+        videoUrl: "https://www.youtube.com/watch?v=b_NpVYzHv08"
+      }
     ]
   }
 ];
