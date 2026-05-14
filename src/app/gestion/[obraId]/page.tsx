@@ -15,9 +15,11 @@ import {
   ChevronRight,
   Calculator,
   Layout,
+  Construction,
 } from "lucide-react";
 import { getObra } from "@/lib/arquitecto-store";
 import type { Obra } from "@/lib/arquitecto-types";
+import { TIPOS_OBRA } from "@/lib/arquitecto-types";
 
 export default function ObraDashboardPage() {
   const params = useParams();
@@ -39,7 +41,10 @@ export default function ObraDashboardPage() {
 
   if (!obra) return null;
 
+  const tipoLabel = TIPOS_OBRA.find((t) => t.value === obra.tipo)?.label || obra.tipo;
+
   const adminFeatures = [
+// ... (rest of adminFeatures)
     {
       id: "arquitecto",
       name: "Configuración Técnica",
@@ -49,6 +54,16 @@ export default function ObraDashboardPage() {
       active: true,
       color: "text-violet-500",
       bg: "bg-violet-500/10",
+    },
+    {
+      id: "genesis",
+      name: "Génesis Técnica",
+      description: "Motor maestro de cuantificación global y pedido logístico unificado.",
+      icon: Construction,
+      href: `/gestion/${obra.id}/genesis`,
+      active: true,
+      color: "text-blue-500",
+      bg: "bg-blue-500/10",
     },
     {
       id: "planos",
@@ -131,11 +146,16 @@ export default function ObraDashboardPage() {
             <h1 className="mb-1 text-3xl font-black tracking-tight text-white uppercase italic">
               {obra.nombre}
             </h1>
-            {obra.direccion && (
-              <p className="flex items-center gap-1.5 text-sm text-slate-400">
-                <MapPin size={14} className="text-amber-500" /> {obra.direccion}
-              </p>
-            )}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              {obra.direccion && (
+                <p className="flex items-center gap-1.5 text-sm text-slate-400">
+                  <MapPin size={14} className="text-amber-500" /> {obra.direccion}
+                </p>
+              )}
+              <div className="flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-black text-amber-500 uppercase tracking-widest">
+                {tipoLabel}
+              </div>
+            </div>
           </div>
           <button className="rounded-lg bg-slate-800 p-2 text-slate-400 hover:text-white">
             <Settings size={20} />

@@ -5,6 +5,8 @@ import { GestionHeader } from "./_components/GestionHeader";
 import { ObraCard } from "./_components/ObraCard";
 import { NuevaObraModal } from "./_components/NuevaObraModal";
 import { EmptyState } from "./_components/EmptyState";
+import { GuiaTiposObra } from "./_components/GuiaTiposObra";
+import { ConfiguradorMaestro } from "./_components/ConfiguradorMaestro";
 import { Plus } from "lucide-react";
 
 export default function GestionPage() {
@@ -19,8 +21,24 @@ export default function GestionPage() {
   } = useGestion();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8 pb-32">
+    <div className="w-full px-4 lg:px-12 py-8 pb-32">
       <GestionHeader />
+
+      <section className="mb-16">
+        <GuiaTiposObra />
+      </section>
+
+      <section className="mb-16">
+        <div className="mb-8 border-l-4 border-blue-500 pl-4">
+          <h2 className="text-2xl font-black tracking-tighter text-white uppercase italic">
+            Génesis <span className="text-blue-500">Técnica</span>
+          </h2>
+          <p className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+            Configurador Maestro de Partidas y Materiales
+          </p>
+        </div>
+        <ConfiguradorMaestro />
+      </section>
 
       <button
         onClick={() => setShowModal(true)}

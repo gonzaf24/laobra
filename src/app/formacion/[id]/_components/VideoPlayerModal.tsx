@@ -40,7 +40,7 @@ export function VideoPlayerModal({
   const videoId = getYouTubeId(videoUrl);
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-300 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm transition-opacity"
