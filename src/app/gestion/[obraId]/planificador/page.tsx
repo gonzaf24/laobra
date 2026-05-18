@@ -1725,10 +1725,8 @@ export default function ObraDetallePage() {
   const [obra, setObra] = useState<Obra | null>(null);
 
   const reloadObra = useCallback(() => {
-    // Usamos queueMicrotask para evitar el warning de React 19:
-    // "Calling setState synchronously within an effect..."
-    queueMicrotask(() => {
-      setObra(getObra(obraId));
+    getObra(obraId).then((data) => {
+      setObra(data);
     });
   }, [obraId]);
 
@@ -1744,39 +1742,33 @@ export default function ObraDetallePage() {
     );
 
   const handleAddEstancia = () => {
-    addEstancia(obraId);
-    reloadObra();
+    addEstancia(obraId).then(() => reloadObra());
   };
 
   const handleUpdateEstancia = (est: EstanciaObra) => {
-    setObra((prev) => {
-      if (!prev) return prev;
-      const updated = {
-        ...prev,
-        estancias: prev.estancias.map((e) => (e.id === est.id ? est : e)),
-        updatedAt: new Date().toISOString(),
-      };
-      saveObra(updated);
-      return updated;
-    });
+    if (!obra) return;
+    const updated = {
+      ...obra,
+      estancias: obra.estancias.map((e) => (e.id === est.id ? est : e)),
+      updatedAt: new Date().toISOString(),
+    };
+    setObra(updated);
+    saveObra(updated);
   };
 
   const handleDeleteEstancia = (estId: string) => {
-    deleteEstancia(obraId, estId);
-    setObra(getObra(obraId));
+    deleteEstancia(obraId, estId).then(() => reloadObra());
   };
 
   const handleUpdateObra = (patch: Partial<Obra>) => {
-    setObra((prev) => {
-      if (!prev) return prev;
-      const updated = {
-        ...prev,
-        ...patch,
-        updatedAt: new Date().toISOString(),
-      };
-      saveObra(updated);
-      return updated;
-    });
+    if (!obra) return;
+    const updated = {
+      ...obra,
+      ...patch,
+      updatedAt: new Date().toISOString(),
+    };
+    setObra(updated);
+    saveObra(updated);
   };
 
   return (
@@ -1800,7 +1792,7 @@ export default function ObraDetallePage() {
           />
           <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[9px] font-bold text-emerald-400">
             <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-            GUARDADO EN LOCAL
+            GUARDADO EN LA NUBE
           </div>
         </div>
         <input

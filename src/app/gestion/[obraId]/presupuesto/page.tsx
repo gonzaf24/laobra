@@ -1560,13 +1560,16 @@ export default function PresupuestoPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const o = getObra(obraId);
-    if (o) {
-      queueMicrotask(() => {
+    if (!obraId) return;
+    Promise.all([
+      getObra(obraId),
+      getPresupuesto(obraId)
+    ]).then(([o, p]) => {
+      if (o && p) {
         setObra(o);
-        setPresupuesto(getPresupuesto(obraId));
-      });
-    }
+        setPresupuesto(p);
+      }
+    });
   }, [obraId]);
 
   const handleSave = useCallback(() => {

@@ -76,8 +76,9 @@ export default function AgendaPage() {
   useEffect(() => {
     const id = params?.obraId;
     if (typeof id === "string") {
-      const data = getObra(id);
-      if (data) setObra(data);
+      getObra(id).then((data) => {
+        if (data) setObra(data);
+      });
     }
   }, [params]);
 

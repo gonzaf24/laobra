@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -17,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { getObra, saveObra } from "@/lib/arquitecto-store";
+import { uploadPlanoAction } from "@/lib/actions";
 import type { Obra, PlanoObra } from "@/lib/arquitecto-types";
 
 type PlanoCategoria = "arquitectura" | "instalaciones" | "detalles" | "otros";
@@ -31,56 +32,74 @@ export default function PlanosPage() {
   const [newPlano, setNewPlano] = useState({
     titulo: "",
     categoria: "arquitectura" as PlanoCategoria,
-    url: "",
   });
+  const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const obraId = typeof params?.obraId === "string" ? params.obraId : null;
 
-  const [obra, setObra] = useState<Obra | null>(() => {
-    if (typeof window !== "undefined" && obraId) {
-      return getObra(obraId);
-    }
-    return null;
-  });
+  const [obra, setObra] = useState<Obra | null>(null);
 
-  // Sincronizar si cambia el obraId (ej: navegando entre obras)
-  const [prevId, setPrevId] = useState<string | null>(obraId);
-  if (obraId !== prevId) {
-    setPrevId(obraId);
-    setObra(obraId ? getObra(obraId) : null);
-  }
+  useEffect(() => {
+    if (obraId) {
+      getObra(obraId).then(setObra);
+    }
+  }, [obraId]);
 
   if (!obra) return null;
+
+  const getImageUrl = (url: string) => {
+    if (url.includes("vercel-storage.com")) {
+      return `/api/file?url=${encodeURIComponent(url)}`;
+    }
+    return url;
+  };
 
   const filteredPlanos = (obra.planos || []).filter(
     (p) => p.categoria === activeTab
   );
 
-  const handleSubirPlano = () => {
-    if (!newPlano.titulo || !newPlano.url) return;
+  const handleSubirPlano = async () => {
+    if (!newPlano.titulo || !file || !obraId) return;
 
-    const plano: PlanoObra = {
-      id: crypto.randomUUID(),
-      titulo: newPlano.titulo,
-      categoria: newPlano.categoria,
-      url: newPlano.url,
-      version: "v1.0",
-      fecha: new Date().toLocaleDateString("es-ES", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }),
-    };
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("obraId", obraId);
+      formData.append("categoria", newPlano.categoria);
 
-    const updatedObra = {
-      ...obra,
-      planos: [...(obra.planos || []), plano],
-    };
+      const { url } = await uploadPlanoAction(formData);
 
-    saveObra(updatedObra);
-    setObra(updatedObra);
-    setShowAddModal(false);
-    setNewPlano({ titulo: "", categoria: "arquitectura", url: "" });
+      const plano: PlanoObra = {
+        id: crypto.randomUUID(),
+        titulo: newPlano.titulo,
+        categoria: newPlano.categoria,
+        url: url,
+        version: "v1.0",
+        fecha: new Date().toLocaleDateString("es-ES", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }),
+      };
+
+      const updatedObra = {
+        ...obra,
+        planos: [...(obra.planos || []), plano],
+      };
+
+      saveObra(updatedObra);
+      setObra(updatedObra);
+      setShowAddModal(false);
+      setNewPlano({ titulo: "", categoria: "arquitectura" });
+      setFile(null);
+    } catch (error) {
+      console.error("Error uploading file", error);
+      alert("Error al subir el plano");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleEliminarPlano = (id: string) => {
@@ -155,12 +174,19 @@ export default function PlanosPage() {
               key={plano.id}
               className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40 transition-all hover:border-violet-500/50"
             >
-              <div className="relative aspect-video overflow-hidden bg-slate-950">
-                <img
-                  src={plano.url}
-                  alt={plano.titulo}
-                  className="h-full w-full object-cover opacity-60 transition-all group-hover:scale-105 group-hover:opacity-100"
-                />
+              <div className="relative aspect-video overflow-hidden bg-slate-950 flex items-center justify-center">
+                {plano.url.toLowerCase().endsWith(".pdf") ? (
+                  <div className="flex flex-col items-center justify-center gap-2 opacity-60 transition-all group-hover:scale-105 group-hover:opacity-100">
+                    <Layout size={48} className="text-violet-500" />
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Documento PDF</span>
+                  </div>
+                ) : (
+                  <img
+                    src={getImageUrl(plano.url)}
+                    alt={plano.titulo}
+                    className="h-full w-full object-cover opacity-60 transition-all group-hover:scale-105 group-hover:opacity-100"
+                  />
+                )}
                 <div className="absolute top-3 right-3 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                   <button
                     onClick={() => setViewPlano(plano)}
@@ -266,30 +292,31 @@ export default function PlanosPage() {
               </div>
               <div>
                 <label className="mb-1 block text-[10px] font-bold tracking-widest text-slate-500 uppercase">
-                  URL de la Imagen / Plano
+                  Archivo del Plano
                 </label>
                 <input
-                  type="text"
-                  value={newPlano.url}
+                  type="file"
+                  accept="image/*,application/pdf"
                   onChange={(e) =>
-                    setNewPlano({ ...newPlano, url: e.target.value })
+                    setFile(e.target.files ? e.target.files[0] : null)
                   }
-                  className="w-full rounded-xl border border-slate-800 bg-slate-950 p-3 text-sm text-white outline-none focus:border-violet-500"
-                  placeholder="https://..."
+                  className="w-full rounded-xl border border-slate-800 bg-slate-950 p-3 text-sm text-white outline-none focus:border-violet-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-600 file:px-4 file:py-2 file:text-xs file:font-bold file:text-white hover:file:bg-violet-500"
                 />
               </div>
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 rounded-xl bg-slate-800 py-3 text-xs font-bold text-white transition-colors hover:bg-slate-700"
+                  disabled={isUploading}
+                  className="flex-1 rounded-xl bg-slate-800 py-3 text-xs font-bold text-white transition-colors hover:bg-slate-700 disabled:opacity-50"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={handleSubirPlano}
-                  className="flex-1 rounded-xl bg-violet-600 py-3 text-xs font-black tracking-widest text-white uppercase transition-colors hover:bg-violet-500"
+                  disabled={isUploading || !file || !newPlano.titulo}
+                  className="flex-1 rounded-xl bg-violet-600 py-3 text-xs font-black tracking-widest text-white uppercase transition-colors hover:bg-violet-500 disabled:opacity-50"
                 >
-                  Guardar
+                  {isUploading ? "Subiendo..." : "Guardar"}
                 </button>
               </div>
             </div>
@@ -311,19 +338,37 @@ export default function PlanosPage() {
             <X size={24} />
           </button>
           <div className="relative h-full w-full overflow-hidden rounded-3xl border border-slate-800 bg-slate-950">
-            <img
-              src={viewPlano.url}
-              alt={viewPlano.titulo}
-              className="h-full w-full object-contain"
-            />
-            <div className="absolute right-0 bottom-0 left-0 bg-linear-to-t from-black/80 p-8">
-              <h2 className="text-xl font-black text-white uppercase italic">
-                {viewPlano.titulo}
-              </h2>
-              <p className="text-sm text-slate-400">
-                {viewPlano.categoria.toUpperCase()} • Versión{" "}
-                {viewPlano.version} • {viewPlano.fecha}
-              </p>
+            {viewPlano.url.toLowerCase().endsWith(".pdf") ? (
+              <iframe
+                src={getImageUrl(viewPlano.url)}
+                className="h-full w-full"
+                title={viewPlano.titulo}
+              />
+            ) : (
+              <img
+                src={getImageUrl(viewPlano.url)}
+                alt={viewPlano.titulo}
+                className="h-full w-full object-contain"
+              />
+            )}
+            <div className="absolute right-0 bottom-0 left-0 bg-linear-to-t from-black/90 pt-24 pb-8 px-8 flex justify-between items-end">
+              <div>
+                <h2 className="text-xl font-black text-white uppercase italic">
+                  {viewPlano.titulo}
+                </h2>
+                <p className="text-sm text-slate-400">
+                  {viewPlano.categoria.toUpperCase()} • Versión {viewPlano.version} • {viewPlano.fecha}
+                </p>
+              </div>
+              <a
+                href={getImageUrl(viewPlano.url)}
+                download
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-xs font-black tracking-widest text-white uppercase transition-colors hover:bg-violet-500"
+              >
+                <Download size={16} /> Descargar
+              </a>
             </div>
           </div>
         </div>

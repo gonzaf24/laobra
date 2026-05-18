@@ -20,53 +20,24 @@ import {
 import type { Obra, EstanciaObra } from "./arquitecto-types";
 import { calcularObra, enriquecerConCostes } from "./arquitecto-calc";
 
-const STORAGE_KEY = "laobra-presupuestos";
+import { getPresupuestoAction, savePresupuestoAction } from "./actions";
 
 // ── Lectura / Escritura ──
 
-function getAll(): Record<string, PresupuestoObra> {
-  if (typeof window === "undefined") return {};
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
+export async function getPresupuesto(obraId: string): Promise<PresupuestoObra> {
+  const p = await getPresupuestoAction(obraId);
+  // Migraciones / Default filling
+  if (!p.jornaleros) p.jornaleros = { ...CONFIG_JORNALEROS_DEFECTO };
+  if (!p.partidasExtra) p.partidasExtra = [];
+  if (!p.personalAdmin) {
+    p.personalAdmin = (p.jornaleros as any).personalAdmin || [];
   }
+  return p;
 }
 
-export function getPresupuesto(obraId: string): PresupuestoObra {
-  const all = getAll();
-  if (all[obraId]) {
-    const p = all[obraId];
-    // Migraciones
-    if (!p.jornaleros) p.jornaleros = { ...CONFIG_JORNALEROS_DEFECTO };
-    if (!p.partidasExtra) p.partidasExtra = [];
-    
-    // Migrar personalAdmin de jornaleros a la raíz si existe
-    if (!p.personalAdmin) {
-      p.personalAdmin = (p.jornaleros as any).personalAdmin || [];
-    }
-    
-    return p;
-  }
-  return {
-    obraId,
-    tarifas: { ...TARIFAS_DEFECTO },
-    jornaleros: { ...CONFIG_JORNALEROS_DEFECTO },
-    personalAdmin: [],
-    partidasExtra: [],
-    costesAdicionales: [],
-    porcentajeImprevistos: 10,
-    porcentajeBeneficio: 0,
-    updatedAt: new Date().toISOString(),
-  };
-}
-
-export function savePresupuesto(presupuesto: PresupuestoObra): void {
-  const all = getAll();
+export async function savePresupuesto(presupuesto: PresupuestoObra): Promise<void> {
   presupuesto.updatedAt = new Date().toISOString();
-  all[presupuesto.obraId] = presupuesto;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  await savePresupuestoAction(presupuesto);
 }
 
 // ── Cálculo Mano de Obra (Modo Especialista €/m²) ──
