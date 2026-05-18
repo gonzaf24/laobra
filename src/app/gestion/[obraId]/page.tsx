@@ -15,7 +15,6 @@ import {
   ChevronRight,
   Calculator,
   Layout,
-  Construction,
 } from "lucide-react";
 import { getObra } from "@/lib/arquitecto-store";
 import type { Obra } from "@/lib/arquitecto-types";
@@ -28,14 +27,15 @@ export default function ObraDashboardPage() {
 
   useEffect(() => {
     if (params.obraId) {
-      const data = getObra(params.obraId as string);
-      if (data) {
-        queueMicrotask(() => {
-          setObra(data);
-        });
-      } else {
-        router.push("/gestion");
-      }
+      getObra(params.obraId as string).then((data) => {
+        if (data) {
+          queueMicrotask(() => {
+            setObra(data);
+          });
+        } else {
+          router.push("/gestion");
+        }
+      });
     }
   }, [params.obraId, router]);
 
@@ -55,16 +55,7 @@ export default function ObraDashboardPage() {
       color: "text-violet-500",
       bg: "bg-violet-500/10",
     },
-    {
-      id: "genesis",
-      name: "Génesis Técnica",
-      description: "Motor maestro de cuantificación global y pedido logístico unificado.",
-      icon: Construction,
-      href: `/gestion/${obra.id}/genesis`,
-      active: true,
-      color: "text-blue-500",
-      bg: "bg-blue-500/10",
-    },
+
     {
       id: "planos",
       name: "Planimetría",

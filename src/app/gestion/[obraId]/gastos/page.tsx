@@ -36,12 +36,13 @@ export default function GastosPage() {
 
   useEffect(() => {
     if (params.obraId) {
-      const data = getObra(params.obraId as string);
-      if (data) {
-        setObra(data);
-      } else {
-        router.push("/gestion");
-      }
+      getObra(params.obraId as string).then((data) => {
+        if (data) {
+          setObra(data);
+        } else {
+          router.push("/gestion");
+        }
+      });
     }
   }, [params.obraId, router]);
 

@@ -8,21 +8,21 @@ export function useGestion() {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   const refreshObras = useCallback(() => {
-    setObras(gestionService.getProjects());
+    gestionService.getProjects().then(setObras);
   }, []);
 
   useEffect(() => {
     refreshObras();
   }, [refreshObras]);
 
-  const handleCrear = (nombre: string, direccion: string, tipo: TipoObra) => {
-    gestionService.createProject(nombre, direccion, tipo);
+  const handleCrear = async (nombre: string, direccion: string, tipo: TipoObra) => {
+    await gestionService.createProject(nombre, direccion, tipo);
     refreshObras();
     setShowModal(false);
   };
 
-  const handleEliminar = (id: string) => {
-    gestionService.deleteProject(id);
+  const handleEliminar = async (id: string) => {
+    await gestionService.deleteProject(id);
     refreshObras();
     setConfirmDelete(null);
   };

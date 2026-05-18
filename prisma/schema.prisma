@@ -7,6 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ══════════════════════════════════════════════
+// ENUMS
+// ══════════════════════════════════════════════
+
+enum TipoObra {
+  REFORMA_INTEGRAL
+  REFORMA_PARCIAL
+  ACONDICIONAMIENTO
+  OBRA_NUEVA
+  REHABILITACION_ENERGETICA
+}
+
+enum TipoEstancia {
+  DORMITORIO
+  BANO
+  COCINA
+  SALON
+  TERRAZA
+  PASILLO
+  LAVADERO
+  SOTANO
+  OTRO
+}
+
+enum CategoriaGasto {
+  MATERIALES
+  MANO_DE_OBRA
+  SERVICIOS
+  OTROS
+}
+
+enum CategoriaPlano {
+  ARQUITECTURA
+  INSTALACIONES
+  DETALLES
+  OTROS
+}
+
+// ══════════════════════════════════════════════
+// TABLAS EXISTENTES (Módulo Formaciones)
+// ══════════════════════════════════════════════
+
 model Category {
   id          String   @id @default(cuid())
   name        String
@@ -38,4 +80,170 @@ model Tool {
   videoUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// ══════════════════════════════════════════════
+// USUARIO (preparado para autenticación futura)
+// ══════════════════════════════════════════════
+
+model User {
+  id           String        @id @default(cuid())
+  email        String?       @unique
+  name         String?
+  avatarUrl    String?
+  obras        Obra[]
+  customPrices CustomPrice[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// ══════════════════════════════════════════════
+// OBRA (Proyecto de Construcción)
+// ══════════════════════════════════════════════
+
+model Obra {
+  id        String   @id @default(cuid())
+  nombre    String
+  direccion String   @default("")
+  tipo      TipoObra @default(REFORMA_INTEGRAL)
+
+  // Relación con usuario
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  // Relaciones hijas
+  estancias   Estancia[]
+  planos      Plano[]
+  gastos      Gasto[]
+  presupuesto Presupuesto?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ══════════════════════════════════════════════
+// ESTANCIA (Habitación dentro de la Obra)
+// ══════════════════════════════════════════════
+
+model Estancia {
+  id     String       @id @default(cuid())
+  tipo   TipoEstancia @default(DORMITORIO)
+  nombre String       @default("")
+  orden  Int          @default(0)
+
+  // ── Secciones Técnicas (JSON) ──
+  // Cada campo almacena un array de configuraciones técnicas.
+  // El tipo TypeScript se valida en el código de la aplicación.
+  suelo     Json @default("[]") // SeccionSuelo[]
+  paredes   Json @default("[]") // SeccionParedes[]
+  alicatado Json @default("[]") // SeccionAlicatado[]
+  techo     Json @default("[]") // SeccionTecho[]
+  pintura   Json @default("[]") // SeccionPintura[]
+
+  // ── Campos de texto libre ──
+  herramientas     String @default("")
+  materialesExtras String @default("")
+  notas            String @default("")
+
+  // Relación padre
+  obra   Obra   @relation(fields: [obraId], references: [id], onDelete: Cascade)
+  obraId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([obraId])
+}
+
+// ══════════════════════════════════════════════
+// PLANO (Documento técnico de la Obra)
+// ══════════════════════════════════════════════
+
+model Plano {
+  id        String         @id @default(cuid())
+  titulo    String
+  categoria CategoriaPlano @default(OTROS)
+  url       String
+  version   String         @default("1.0")
+  fecha     DateTime       @default(now())
+
+  obra   Obra   @relation(fields: [obraId], references: [id], onDelete: Cascade)
+  obraId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([obraId])
+}
+
+// ══════════════════════════════════════════════
+// GASTO (Ticket/Factura de compra)
+// ══════════════════════════════════════════════
+
+model Gasto {
+  id        String         @id @default(cuid())
+  concepto  String
+  importe   Float
+  categoria CategoriaGasto @default(MATERIALES)
+  fecha     DateTime       @default(now())
+  fotoUrl   String? // URL en Vercel Blob
+  proveedor String?
+  notas     String?
+
+  obra   Obra   @relation(fields: [obraId], references: [id], onDelete: Cascade)
+  obraId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([obraId])
+  @@index([fecha])
+}
+
+// ══════════════════════════════════════════════
+// PRESUPUESTO (Configuración económica de la Obra)
+// ══════════════════════════════════════════════
+
+model Presupuesto {
+  id String @id @default(cuid())
+
+  // Configuraciones complejas almacenadas como JSON
+  tarifas           Json @default("{}") // TarifasManoDeObra
+  jornalerosConfig  Json @default("{}") // ConfigJornaleros
+  personalAdmin     Json @default("[]") // PersonalAdmin[]
+  partidasExtra     Json @default("[]") // PartidaManoObra[]
+  costesAdicionales Json @default("[]") // CosteAdicional[]
+
+  // Porcentajes
+  porcentajeImprevistos Float @default(10)
+  porcentajeBeneficio   Float @default(0)
+
+  // Relación 1:1 con Obra
+  obra   Obra   @relation(fields: [obraId], references: [id], onDelete: Cascade)
+  obraId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ══════════════════════════════════════════════
+// PRECIOS PERSONALIZADOS DE MATERIALES
+// ══════════════════════════════════════════════
+
+model CustomPrice {
+  id         String @id @default(cuid())
+  materialId String // ID del material en materials-data.ts
+  formato    String // Formato comercial (ej: "Saco 25kg")
+  precio     Float  // Precio personalizado del usuario
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, materialId, formato])
+  @@index([userId])
 }
